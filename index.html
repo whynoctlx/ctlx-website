@@ -5,68 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>citalopram</title>
     <meta name="description" content="citalopram — builds tools, trades markets, ships things that compound." />
-    <meta name="theme-color" content="#1b1917" />
+    <meta name="theme-color" content="#090908" />
     <link rel="icon" type="image/jpeg" href="assets/profile.jpeg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..600&family=Inter:wght@400..600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- gradients for the Zarobenqo mark -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <linearGradient id="glyph-ink" gradientUnits="userSpaceOnUse" x1="20" y1="20" x2="80" y2="80">
+          <stop offset="0" stop-color="#ffffff" />
+          <stop offset=".55" stop-color="#f1efe8" />
+          <stop offset="1" stop-color="#c9c6bd" />
+        </linearGradient>
+        <linearGradient id="hairline" gradientUnits="userSpaceOnUse" x1="27" y1="73" x2="73" y2="27">
+          <stop offset="0" stop-color="#ffffff" stop-opacity=".05" />
+          <stop offset=".5" stop-color="#ffffff" stop-opacity=".85" />
+          <stop offset="1" stop-color="#ffffff" stop-opacity=".05" />
+        </linearGradient>
+      </defs>
+    </svg>
+
     <main>
       <article class="card">
-        <div class="avatar" style="--i: 0">
-          <img src="assets/profile.jpeg" alt="" width="88" height="88" draggable="false" />
-        </div>
+        <header class="head" style="--i: 0">
+          <div class="avatar">
+            <img src="assets/profile.jpeg" alt="" width="76" height="76" draggable="false" />
+          </div>
+          <p class="place">
+            <span>Bratislava, SK</span>
+            <time id="clock" aria-label="Local time in Bratislava"></time>
+          </p>
+        </header>
 
         <h1 style="--i: 1">citalopram</h1>
         <p class="bio" style="--i: 2">
           Builds tools, trades markets, ships things that compound.
         </p>
 
-        <ul class="links">
-          <li style="--i: 3">
-            <div class="row">
-              <span class="row-name">zarobenqo</span>
-              <span class="row-note">Private project</span>
-              <svg class="icon" viewBox="0 0 16 16" aria-hidden="true">
-                <path d="M4 7.5h8v6H4zM5.75 7.5V5.25a2.25 2.25 0 0 1 4.5 0V7.5" />
-              </svg>
+        <ul class="work">
+          <li class="feature" style="--i: 3">
+            <div class="lockup">
+              <span class="mark" id="mark">
+                <svg class="hair" viewBox="0 0 100 100" aria-hidden="true">
+                  <line pathLength="1" x1="27" y1="73" x2="73" y2="27" />
+                </svg>
+                <svg class="glyph" viewBox="0 0 100 100" aria-hidden="true">
+                  <path class="z" pathLength="1" d="M22 24 H45 L24 45 H42" />
+                  <circle class="q-ring" pathLength="1" cx="64" cy="64" r="12" transform="rotate(45 64 64)" />
+                  <path class="q-tail" pathLength="1" d="M70 70 L80 80" />
+                </svg>
+              </span>
+              <span class="wordmark">Zarobenqo</span>
+              <span class="private">
+                <svg viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M4 7.5h8v6H4zM5.75 7.5V5.25a2.25 2.25 0 0 1 4.5 0V7.5" />
+                </svg>
+                Private
+              </span>
             </div>
+            <p class="note">
+              A platform for couriers. It reads their shifts and estimates what the month will pay.
+            </p>
           </li>
+
           <li style="--i: 4">
             <div class="row">
-              <span class="row-name">Compound</span>
-              <span class="row-note">Steroid cycle plotter built on scientific data</span>
+              <span class="name">Compound</span>
+              <span class="note">
+                Steroid cycle plotter. Models active compound levels over time from half-lives
+                published in clinical studies and drug labels.
+              </span>
             </div>
           </li>
+
           <li style="--i: 5">
             <a class="row" href="https://ctlx.app" target="_blank" rel="noopener">
-              <span class="row-name">ctlx.app</span>
-              <span class="row-note">Atlas, Astral, the rest</span>
-              <svg class="icon" viewBox="0 0 16 16" aria-hidden="true">
-                <path d="M4.5 11.5l7-7M5.5 4.5h6v6" />
-              </svg>
+              <span class="name">ctlx.app</span>
+              <span class="note">Atlas, Astral, the rest.</span>
+              <span class="go" aria-hidden="true">
+                <svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg>
+              </span>
             </a>
           </li>
+
           <li style="--i: 6">
             <a class="row" href="https://whyno.love" target="_blank" rel="noopener">
-              <span class="row-name">whyno.love</span>
-              <span class="row-note">Second node</span>
-              <svg class="icon" viewBox="0 0 16 16" aria-hidden="true">
-                <path d="M4.5 11.5l7-7M5.5 4.5h6v6" />
-              </svg>
+              <span class="name">whyno.love</span>
+              <span class="note">Second node.</span>
+              <span class="go" aria-hidden="true">
+                <svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg>
+              </span>
             </a>
           </li>
         </ul>
-
-        <footer style="--i: 7">
-          <span>Bratislava, SK</span>
-          <time id="clock" aria-label="Local time in Bratislava"></time>
-        </footer>
       </article>
     </main>
 
