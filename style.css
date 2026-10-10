@@ -281,6 +281,10 @@ h2 {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.grid.four {
+  grid-template-columns: repeat(4, 1fr);
+}
+
 /* ── cards ───────────────────────────────────────────────── */
 .card {
   display: flex;
@@ -401,6 +405,17 @@ h3 {
 
 .card.link .note {
   margin-bottom: 32px;
+}
+
+/* model ranking, in plan-card form */
+.card.model {
+  min-height: 240px;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.card.model.featured .tag {
+  background: var(--primary-deep);
 }
 
 /* serum level across five weekly doses, drawn by main.js */
@@ -642,6 +657,12 @@ footer .brand-mark path {
   }
 }
 
+@media (max-width: 1023px) {
+  .grid.four {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 767px) {
   :root {
     --gutter: 16px;
@@ -672,7 +693,8 @@ footer .brand-mark path {
   }
 
   .grid,
-  .grid.three {
+  .grid.three,
+  .grid.four {
     grid-template-columns: 1fr;
     margin-top: 32px;
   }
@@ -688,6 +710,11 @@ footer .brand-mark path {
 
   .card.featured {
     min-height: 400px;
+  }
+
+  .card.model {
+    min-height: 0;
+    gap: 32px;
   }
 
   .card.link {
