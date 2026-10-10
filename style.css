@@ -281,10 +281,6 @@ h2 {
   grid-template-columns: repeat(3, 1fr);
 }
 
-.grid.four {
-  grid-template-columns: repeat(4, 1fr);
-}
-
 /* ── cards ───────────────────────────────────────────────── */
 .card {
   display: flex;
@@ -407,15 +403,111 @@ h3 {
   margin-bottom: 32px;
 }
 
-/* model ranking, in plan-card form */
-.card.model {
-  min-height: 240px;
-  justify-content: space-between;
-  gap: 48px;
+/* ── model ranking: one favourite, three behind it ───────── */
+.rank {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: 16px;
+  margin-top: 48px;
 }
 
-.card.model.featured .tag {
+.rank-rest {
+  display: grid;
+  gap: 16px;
+}
+
+.card.model {
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+}
+
+.model h3 {
+  font-size: 1.75rem;
+}
+
+.maker {
+  margin-top: 2px;
+  color: var(--on-dark-mute);
+  font-size: 0.875rem;
+  line-height: 1.43;
+  letter-spacing: 0;
+}
+
+.model .numeral {
+  width: 1.1ch;
+  color: rgb(255 255 255 / 0.32);
+  font-size: 3.5rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.model .tag {
+  margin-left: auto;
+}
+
+.card.model.first {
+  position: relative;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  min-height: 520px;
+  padding: 40px;
+  background: var(--primary);
+  overflow: hidden;
+}
+
+.first .tag {
+  margin-left: 0;
   background: var(--primary-deep);
+}
+
+.first h3 {
+  position: relative;
+  font-size: clamp(2.5rem, 5.4vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.first .maker {
+  position: relative;
+  margin-top: 12px;
+  color: rgb(255 255 255 / 0.86);
+  font-size: 1.125rem;
+}
+
+/* the rank itself, at poster scale, running off the corner */
+.first .numeral {
+  position: absolute;
+  top: -0.14em;
+  right: 0.02em;
+  width: auto;
+  color: var(--primary-deep);
+  font-size: clamp(18rem, 36vw, 30rem);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  transition: transform 900ms var(--ease);
+}
+
+.first:hover .numeral {
+  transform: translate(-2%, 3%) scale(1.04);
+}
+
+.card.model.last {
+  border: 1px solid var(--hairline-dark);
+  background: none;
+}
+
+.last h3 {
+  color: var(--on-dark-mute);
+}
+
+.last .tag {
+  background: none;
+  box-shadow: inset 0 0 0 1px var(--hairline-dark);
+  color: var(--on-dark-mute);
 }
 
 /* serum level across five weekly doses, drawn by main.js */
@@ -658,8 +750,12 @@ footer .brand-mark path {
 }
 
 @media (max-width: 1023px) {
-  .grid.four {
-    grid-template-columns: repeat(2, 1fr);
+  .rank {
+    grid-template-columns: 1fr;
+  }
+
+  .card.model.first {
+    min-height: 420px;
   }
 }
 
@@ -693,8 +789,7 @@ footer .brand-mark path {
   }
 
   .grid,
-  .grid.three,
-  .grid.four {
+  .grid.three {
     grid-template-columns: 1fr;
     margin-top: 32px;
   }
@@ -712,9 +807,29 @@ footer .brand-mark path {
     min-height: 400px;
   }
 
+  .rank {
+    margin-top: 32px;
+  }
+
   .card.model {
-    min-height: 0;
-    gap: 32px;
+    gap: 16px;
+  }
+
+  .card.model.first {
+    min-height: 340px;
+    padding: 24px;
+  }
+
+  .rank-rest h3 {
+    font-size: 1.25rem;
+  }
+
+  .rank-rest .numeral {
+    font-size: 2.25rem;
+  }
+
+  .rank-rest .card {
+    padding: 20px;
   }
 
   .card.link {
