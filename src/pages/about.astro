@@ -1,0 +1,116 @@
+---
+import Base from '../layouts/Base.astro';
+
+const areas = [
+  {
+    name: 'Software Engineering',
+    description: 'Modern web and desktop applications, built for performance, maintainability, security, and simplicity.',
+    focus: 'TypeScript, JavaScript, React, Next.js, Bun, Python, FastAPI, Tauri.',
+  },
+  {
+    name: 'Artificial Intelligence',
+    description: 'AI-assisted development, coding agents, automation, model integrations, and practical AI applications.',
+    focus: 'AI coding agents, LLM integrations, intelligent automation, AI-powered tools, OCR and computer vision.',
+  },
+  {
+    name: 'Product Design',
+    description: 'Minimal, intuitive, and visually refined digital experiences.',
+    focus:
+      "UI/UX, design systems, typography, visual hierarchy, responsive interfaces, interaction design. Inspired by Apple's Human Interface Guidelines, Framer, and modern minimalist interfaces.",
+  },
+  {
+    name: 'Financial Technology',
+    description: 'Experiments in market analysis, trading infrastructure, data processing, and visualization.',
+    focus:
+      'Market data analysis, backtesting, algorithmic trading concepts, real-time data visualization, AI-assisted analytics.',
+  },
+  {
+    name: 'Systems & Experimentation',
+    description: 'Understanding technologies beyond their surface-level functionality.',
+    focus:
+      'API integrations, authentication, application security, cryptography fundamentals, performance optimization, system architecture.',
+  },
+];
+---
+
+<Base
+  title="Behind CTLX"
+  description="CTLX is the personal digital space and independent software lab of citalopram: software engineering, AI, automation, and experiments that sometimes become products."
+>
+  <main>
+    <section class="block hero wrap">
+      <div class="side"><p class="kicker">Behind CTLX</p></div>
+      <div class="main">
+        <h1 style="--i: 0">Independent by design.</h1>
+        <p class="lead" style="--i: 1">
+          CTLX is an independent software lab: a place for software engineering, AI, automation,
+          and experiments that sometimes become products.
+        </p>
+        <div class="prose" style="--i: 2">
+          <p>
+            I'm an independent builder exploring the intersection of software engineering,
+            artificial intelligence, and digital product design. I create tools, experiment with
+            emerging technologies, and turn ideas into functional products.
+          </p>
+          <p>
+            My interests span AI-assisted development, automation, financial technology, data
+            visualization, and modern web applications.
+          </p>
+          <p>
+            I believe good software should be fast, intuitive, and thoughtfully designed.
+            Complexity should serve a purpose, not become the product.
+          </p>
+        </div>
+        <ul class="tags" style="--i: 3" aria-label="Identity">
+          <li>Independent Developer</li>
+          <li>AI Explorer</li>
+          <li>Product Builder</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="block wrap" id="what-i-do">
+      <div class="side"><h2 class="kicker"><span>01</span>What I Do</h2></div>
+      <div class="main">
+        <p class="lead">Areas I work in and keep exploring. Interests, not credentials.</p>
+        <ul class="list">
+          {
+            areas.map(({ name, description, focus }) => (
+              <li>
+                <span class="name">{name}</span>
+                <span class="desc">
+                  {description}
+                  <span class="focus">{focus}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="block wrap" id="approach">
+      <div class="side"><h2 class="kicker"><span>02</span>Approach</h2></div>
+      <div class="main">
+        <div class="prose">
+          <p class="lead">
+            Most of what I know came from taking things apart. I would rather understand how a
+            tool works than only know how to use it, and I judge a technology by what it can
+            actually do, whatever its popularity.
+          </p>
+          <p>
+            I learn by building. Make something, test it, find where it breaks, go again. Each
+            pass tends to remove more than it adds: the aim is to cut what a product doesn't need
+            and keep everything it does.
+          </p>
+          <p>
+            Performance, usability, and visual refinement carry equal weight. A fast tool that is
+            awkward to use is unfinished, and so is a polished one that is slow. Nothing here is
+            ever quite done. Existing work gets refined as practice shows what was wrong with it.
+          </p>
+          <p><a href="/#work">See the work</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>

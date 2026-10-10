@@ -1,0 +1,382 @@
+---
+import Base from '../layouts/Base.astro';
+
+// Lab experiments. category, status and href are optional.
+// status: 'Exploring' | 'Building' | 'Completed' | 'Archived'
+const experiments = [
+  {
+    name: 'Astral',
+    description:
+      'An experimental platform combining technical indicators, market structure, algorithmic scoring, and artificial intelligence.',
+    category: 'AI · FinTech',
+  },
+  {
+    name: 'Manual Backtester',
+    description: 'A chart-based environment for manually testing trading strategies using historical market data.',
+    category: 'FinTech',
+  },
+];
+
+// Zarobenqo preview: the app's delivery chart (stops per worked day, this month over last),
+// drawn at build time from sample numbers. Not real figures.
+const sample = {
+  current: [121, 124, 128, 126, 131, 135, 133, 129, 132, 137, 141, 139, 142, 145],
+  previous: [134, 131, 127, 129, 125, 122, 124, 128, 126, 123, 121, 125, 129, 127, 131, 133, 130, 134, 137, 135, 138],
+  packages: { current: 189, previous: 166 },
+};
+const W = 240;
+const H = 96;
+const PAD_X = 3;
+const PAD_Y = 5;
+const all = [...sample.current, ...sample.previous];
+const min = Math.min(...all);
+const max = Math.max(...all);
+const count = Math.max(sample.current.length, sample.previous.length);
+const x = (i) => PAD_X + (i / (count - 1)) * (W - PAD_X * 2);
+const y = (v) => PAD_Y + ((max - v) / (max - min)) * (H - PAD_Y * 2);
+// a smooth line through the days: Catmull-Rom converted to cubic Béziers
+const curve = (series) => {
+  const p = series.map((v, i) => [x(i), y(v)]);
+  const at = (i) => p[Math.min(p.length - 1, Math.max(0, i))];
+  const n = (value) => value.toFixed(1);
+  return p.slice(1).reduce((d, [px, py], i) => {
+    const [ax, ay] = at(i - 1);
+    const [bx, by] = at(i);
+    const [cx, cy] = at(i + 2);
+    return `${d} C${n(bx + (px - ax) / 6)},${n(by + (py - ay) / 6)} ${n(px - (cx - bx) / 6)},${n(py - (cy - by) / 6)} ${n(px)},${n(py)}`;
+  }, `M${n(p[0][0])},${n(p[0][1])}`);
+};
+const sorted = [...sample.current].sort((a, b) => a - b);
+const median = (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2;
+const last = sample.current.length - 1;
+const area = `${curve(sample.current)} L${x(last).toFixed(1)},${H} L${x(0).toFixed(1)},${H} Z`;
+const percent = (value, of) => `${(value / of) * 100}%`;
+const readout = [
+  { series: 'current', label: `This month, day ${last + 1}`, stops: sample.current[last], packages: sample.packages.current },
+  { series: 'previous', label: `Last month, day ${last + 1}`, stops: sample.previous[last], packages: sample.packages.previous },
+];
+
+const archive = [
+  {
+    name: 'Neutron.technology',
+    description: 'A Lua script for Neverlose.cc. The most advanced semirage helper available.',
+    stack: ['Lua'],
+  },
+  {
+    name: 'CTLX TradeLog',
+    description: 'A simple JSON trade logger. It worked the numbers out of the data, so nobody had to by hand.',
+    stack: ['Next.js 16', 'Python'],
+  },
+  {
+    name: 'CTLX Atlas',
+    description: 'An all-in-one trading platform on a trading API, built for prop firms and multiple accounts.',
+    stack: ['Next.js 16', 'Python'],
+  },
+];
+---
+
+<Base title="citalopram" description="citalopram — builds tools, trades markets, ships things that compound." home>
+  <!-- gradients for the Zarobenqo mark -->
+  <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="glyph-ink" gradientUnits="userSpaceOnUse" x1="20" y1="20" x2="80" y2="80">
+        <stop offset="0" stop-color="#ffffff" />
+        <stop offset=".55" stop-color="#f1efe8" />
+        <stop offset="1" stop-color="#c9c6bd" />
+      </linearGradient>
+      <linearGradient id="hairline" gradientUnits="userSpaceOnUse" x1="27" y1="73" x2="73" y2="27">
+        <stop offset="0" stop-color="#ffffff" stop-opacity=".05" />
+        <stop offset=".5" stop-color="#ffffff" stop-opacity=".85" />
+        <stop offset="1" stop-color="#ffffff" stop-opacity=".05" />
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <main id="top">
+    <section class="block hero wrap" id="intro">
+      <div class="side"><p class="kicker"><span>01</span>Introduction</p></div>
+      <div class="main">
+        <p class="who" style="--i: 0">
+          <img class="portrait" src="/assets/profile-192.jpeg" alt="" width="48" height="48" draggable="false" />
+          <span>
+            <b>citalopram</b>
+            <span class="role">Independent Developer · AI Explorer · Product Builder</span>
+          </span>
+        </p>
+        <h1 style="--i: 1">Builds tools, trades markets, ships things that compound.</h1>
+        <div class="prose" style="--i: 2">
+          <p>I build tools, experiment with emerging technologies, and turn curiosity into functional products.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block wrap" id="work">
+      <div class="side"><h2 class="kicker"><span>02</span>Selected Work</h2></div>
+      <div class="main">
+        <article class="project">
+          <div>
+            <div class="lockup">
+              <span class="mark" id="mark">
+                <svg class="hair" viewBox="0 0 100 100">
+                <line pathLength="1" x1="27" y1="73" x2="73" y2="27" />
+                </svg>
+                <svg class="glyph" viewBox="0 0 100 100">
+                <path class="z" pathLength="1" d="M22 24 H45 L24 45 H42" />
+                <circle class="q-ring" pathLength="1" cx="64" cy="64" r="12" transform="rotate(45 64 64)" />
+                <path class="q-tail" pathLength="1" d="M70 70 L80 80" />
+                </svg>
+              </span>
+              <div>
+                <h3>Zarobenqo</h3>
+                <p class="sub">Earnings &amp; productivity tracking</p>
+              </div>
+            </div>
+            <p>The original courier app, rebuilt. Tracks earnings, working days, and performance.</p>
+            <dl class="meta">
+              <div>
+                <dt>Status</dt>
+                <dd><span class="status" data-status="private">Private</span></dd>
+              </div>
+              <div>
+                <dt>Stack</dt>
+                <dd><ul class="tags"><li>Next.js 16</li><li>Turso</li><li>Drizzle</li></ul></dd>
+              </div>
+            </dl>
+          </div>
+          <div class="preview chart" aria-hidden="true">
+            <span class="preview-head">
+              Delivery stops, sample data
+              <span class="button disabled">
+                <svg viewBox="0 0 16 16"><path d="M4 7.5h8v6H4zM5.75 7.5V5.25a2.25 2.25 0 0 1 4.5 0V7.5" /></svg>
+                Private
+              </span>
+            </span>
+            <span class="readout">
+              {
+                readout.map(({ series, label, stops, packages }) => (
+                  <span data-series={series}>
+                    <span class="readout-label">
+                      <i />
+                      {label}
+                    </span>
+                    <span class="readout-figures">
+                      <b>{stops}</b> stops <b>{packages}</b> packages
+                    </span>
+                  </span>
+                ))
+              }
+            </span>
+            <span class="spark">
+              <span class="plot">
+                <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="spark-area" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0" stop-color="currentColor" stop-opacity=".16" />
+                      <stop offset="1" stop-color="currentColor" stop-opacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <line class="median" x1="0" x2={W} y1={y(median)} y2={y(median)} />
+                  <path class="line previous" d={curve(sample.previous)} />
+                  <path d={area} fill="url(#spark-area)" />
+                  <path class="line" d={curve(sample.current)} />
+                </svg>
+                <span class="spark-dot" style={`left: ${percent(x(last), W)}; top: ${percent(y(sample.current[last]), H)}`} />
+              </span>
+              <span class="axis" style={`top: ${percent(PAD_Y, H)}`}>{max}</span>
+              <span class="axis chip" style={`top: ${percent(y(median), H)}`}>{median}</span>
+              <span class="axis" style={`top: ${percent(H - PAD_Y, H)}`}>{min}</span>
+            </span>
+          </div>
+        </article>
+
+        <article class="project">
+          <div>
+            <h3>Compound</h3>
+            <p class="sub">Pharmacokinetic visualization</p>
+            <p>Models active compound levels from half-lives published in clinical studies and drug labels.</p>
+            <dl class="meta">
+              <div>
+                <dt>Status</dt>
+                <dd class="row">
+                  <span class="status" data-status="live">Live</span>
+                  <a href="https://compound.ctlx.app" target="_blank" rel="noopener">
+                    compound.ctlx.app
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg>
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt>Stack</dt>
+                <dd><ul class="tags"><li>Next.js 16</li><li>Lightweight Charts</li></ul></dd>
+              </div>
+            </dl>
+          </div>
+          <a class="preview dark" href="https://compound.ctlx.app" target="_blank" rel="noopener" aria-label="Open Compound">
+            <span class="preview-head">
+              Serum level, five weekly doses
+              <span class="button on-dark">Open <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg></span>
+            </span>
+            <svg class="curve" aria-hidden="true">
+              <path class="doses" id="doses" />
+              <path class="area" id="area" />
+              <path class="line" id="curve" pathLength="1" />
+            </svg>
+          </a>
+        </article>
+
+        <ul class="list">
+          <li>
+            <span class="name"><a href="https://whyno.love" target="_blank" rel="noopener">whyno.love</a></span>
+            <span class="desc">Second node.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="block wrap" id="about">
+      <div class="side"><p class="kicker"><span>03</span>Behind CTLX</p></div>
+      <div class="main">
+        <h2>Driven by curiosity.</h2>
+        <div class="prose">
+          <p class="lead">
+            I'm driven by curiosity and a constant desire to understand how things work.
+          </p>
+          <p>
+            I care about the details, from how a system performs to how a single interaction
+            feels. Most of what I build starts with curiosity. The rest is experimentation,
+            iteration, and probably too many redesigns.
+          </p>
+          <p><a href="/about">More about CTLX</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block wrap" id="lab">
+      <div class="side"><p class="kicker"><span>04</span>Experiments</p></div>
+      <div class="main">
+        <h2>The Lab</h2>
+        <p class="lead">Ideas, experiments, and unfinished thoughts.</p>
+        <ul class="list">
+          {
+            experiments.map(({ name, description, category, status, href }) => (
+              <li>
+                <span class="name">{href ? <a href={href}>{name}</a> : name}</span>
+                <span class="desc">{description}</span>
+                <span class="trail">
+                  {category && <span class="cat">{category}</span>}
+                  {status && (
+                    <span class="status" data-status={status.toLowerCase()}>
+                      {status}
+                    </span>
+                  )}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="block wrap" id="workflow">
+      <div class="side"><p class="kicker"><span>05</span>AI Workflow</p></div>
+      <div class="main">
+        <h2>Tools behind the work.</h2>
+        <p class="lead">I try different models, agents, and tools to find what actually works.</p>
+
+        <div class="duo">
+          <div class="terminal" role="img" aria-label="Stack of this site: agent Claude Code, site Astro as static HTML, styles plain CSS with no framework, script a little vanilla JavaScript.">
+            <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+            <pre aria-hidden="true"><span style="--l: 0">$ stack --this-site</span>
+<span style="--l: 1">agent   Claude Code   <em># does the typing</em></span>
+<span style="--l: 2">site    Astro         <em># static HTML</em></span>
+<span style="--l: 3">styles  plain CSS     <em># no framework</em></span>
+<span style="--l: 4">script  vanilla JS    <em># a little</em></span></pre>
+          </div>
+          <div class="terminal" role="img" aria-label="Model ranking: 1 Claude Opus 5.5, favourite. 2 Claude Sonnet 5.5, secondary. 3 Claude Haiku 5.5, workhorse. 4 GPT 6.1 Sol, when nothing else is left.">
+            <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+            <pre aria-hidden="true"><span style="--l: 0">$ models --rank</span>
+<span style="--l: 1">1  Claude Opus 5.5     <em># favourite</em></span>
+<span style="--l: 2">2  Claude Sonnet 5.5   <em># secondary</em></span>
+<span style="--l: 3">3  Claude Haiku 5.5    <em># workhorse</em></span>
+<span style="--l: 4">4  GPT 6.1 Sol         <em># last resort</em></span></pre>
+          </div>
+        </div>
+        <p class="quote">AI accelerates the process. It doesn't replace the thinking behind it.</p>
+
+        <div class="usage">
+          <div class="usage-head">
+            <h3>Usage <span class="badge">Simulated</span></h3>
+            <p>Any given Tuesday.</p>
+          </div>
+          <dl>
+            <div style="--p: 1.0; --l: 0">
+              <dt>Current session</dt>
+              <dd class="pct">100% used</dd>
+              <dd class="bar" aria-hidden="true"><i></i></dd>
+              <dd class="when">Resets in 4 h 59 min</dd>
+            </div>
+            <div style="--p: 0.97; --l: 1">
+              <dt>Weekly, all models</dt>
+              <dd class="pct">97% used</dd>
+              <dd class="bar" aria-hidden="true"><i></i></dd>
+              <dd class="when">Resets Monday</dd>
+            </div>
+            <div style="--l: 2">
+              <dt>Breakdown</dt>
+              <dd class="pct">by model</dd>
+              <dd class="bar split-bar" aria-hidden="true"><i style="--p: 1"></i></dd>
+              <dd class="when">
+                <ul class="legend">
+                  <li>Opus 5.5 <b>100%</b></li>
+                </ul>
+              </dd>
+            </div>
+            <div>
+              <dt>Session cost <span class="badge">Real</span></dt>
+              <dd class="pct">$18.84</dd>
+              <dd class="when">Two sessions, five redesigns of one intro card.</dd>
+              <dd class="stats">
+                <ul>
+                  <li><span>Lines</span><b>+3,402</b></li>
+                  <li><span>Input</span><b>330</b></li>
+                  <li><span>Output</span><b>16.6k</b></li>
+                  <li><span>Cache</span><b>37.8M</b></li>
+                  <li><span>Total tokens</span><b>37.8M</b></li>
+                </ul>
+              </dd>
+            </div>
+          </dl>
+          <p class="button disabled">Limit reached. Switching to GPT 6.1 Sol.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block wrap" id="archive">
+      <div class="side"><p class="kicker"><span>06</span>Archive</p></div>
+      <div class="main">
+        <h2>Previous experiments.</h2>
+        <p class="lead">Not every experiment becomes a finished product.</p>
+        <ul class="list">
+      {
+        archive.map(({ name, description, stack }) => (
+          <li>
+            <span class="name">{name}</span>
+            <span class="desc">{description}</span>
+            <span class="trail">
+              <ul class="tags" aria-label="Built with">
+                {stack.map((tech) => <li>{tech}</li>)}
+              </ul>
+              <span class="status" data-status="archived">Discontinued</span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+      </div>
+    </section>
+  </main>
+</Base>
+
+<script>
+  import '../scripts/main.js';
+</script>
