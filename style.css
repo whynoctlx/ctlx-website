@@ -516,13 +516,12 @@ a.button:active {
 /* weekly share per model: one bar, three segments */
 .usage .split-bar {
   display: flex;
-  gap: 2px;
   background: none;
 }
 
 .usage .split-bar i {
   flex: none;
-  width: calc(var(--p) * 100% - 2px);
+  width: calc(var(--p) * 100%);
   min-width: 4px;
   border-radius: 9999px;
 }
