@@ -195,8 +195,7 @@ a.button:active {
   color: var(--charcoal);
 }
 
-.button svg,
-.snippet svg {
+.button svg {
   width: 14px;
   height: 14px;
   fill: none;
@@ -207,8 +206,7 @@ a.button:active {
   transition: transform 300ms var(--ease);
 }
 
-.card:hover .button svg,
-.snippet:hover svg {
+.card:hover .button svg {
   transform: translate(2px, -2px);
 }
 
@@ -255,24 +253,6 @@ a.button:active {
   margin-top: 8px;
   max-width: 32ch;
   text-wrap: balance;
-}
-
-.snippet {
-  display: inline-flex;
-  align-items: center;
-  gap: 16px;
-  height: 48px;
-  margin-top: 32px;
-  padding: 0 20px;
-  border-radius: 9999px;
-  background: var(--surface-soft);
-  color: var(--ink);
-  text-decoration: none;
-}
-
-.snippet code {
-  font-family: var(--mono);
-  font-size: 1rem;
 }
 
 .hero > * {
@@ -453,6 +433,83 @@ a.button:active {
   font-style: normal;
 }
 
+/* usage meter, as a joke */
+.usage {
+  grid-column: 1 / -1;
+  padding: 32px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+}
+
+.usage-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.usage-head p {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.usage dl {
+  display: grid;
+  gap: 24px;
+  margin: 24px 0;
+}
+
+.usage dl > div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 16px;
+}
+
+.usage dt {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.usage .pct {
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.usage .bar {
+  grid-column: 1 / -1;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--hairline);
+  overflow: hidden;
+}
+
+.usage .bar i {
+  display: block;
+  width: calc(var(--p) * 100%);
+  height: 100%;
+  border-radius: inherit;
+  background: var(--ink);
+  transform-origin: left;
+}
+
+.usage .when {
+  grid-column: 1 / -1;
+  font-size: 0.875rem;
+  line-height: 1.43;
+}
+
+.usage .button {
+  display: flex;
+  height: auto;
+  min-height: 36px;
+  padding: 8px 20px;
+  white-space: normal;
+  text-align: center;
+  line-height: 1.43;
+}
+
 /* ── footer ──────────────────────────────────────────────── */
 footer {
   margin-top: var(--section);
@@ -630,11 +687,24 @@ footer a {
   }
 }
 
+@keyframes fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
 @supports (animation-timeline: view()) {
   .reveal {
     animation: reveal linear both;
     animation-timeline: view();
     animation-range: entry 0% entry 40%;
+  }
+
+  /* the meters run up as the card scrolls in */
+  .usage .bar i {
+    animation: fill cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-timeline: view();
+    animation-range: entry calc(40% + var(--l) * 20%) cover calc(30% + var(--l) * 6%);
   }
 
   /* terminal prints its lines as it scrolls in */
@@ -678,7 +748,8 @@ footer a {
     padding-top: 40px;
   }
 
-  .card {
+  .card,
+  .usage {
     padding: 24px;
   }
 
