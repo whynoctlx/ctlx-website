@@ -1,0 +1,64 @@
+---
+import '../styles/style.css';
+import ClaudeMark from '../components/ClaudeMark.astro';
+
+const { title, description, home = false } = Astro.props;
+// section links are in-page on the homepage and point back to it from elsewhere
+const base = home ? '' : '/';
+const links = [
+  { href: `${base}#work`, label: 'Work' },
+  { href: home ? '#about' : '/about', label: 'About', current: !home },
+  { href: `${base}#lab`, label: 'Lab', opt: true },
+  { href: `${base}#workflow`, label: 'Workflow', opt: true },
+  { href: `${base}#archive`, label: 'Archive' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="icon" type="image/svg+xml" href="/assets/ctlx.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="nav">
+      <div class="wrap">
+        <a class="brand" href={home ? '#top' : '/'} aria-label={home ? 'CTLX' : 'CTLX home'}>
+          <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true">
+            <path class="upper" pathLength="1" d="M27 25 L50 46 L73 25" />
+            <path class="caret" pathLength="1" d="M27 75 L50 54 L73 75" />
+          </svg>
+        </a>
+        <nav aria-label="Sections">
+          {
+            links.map(({ href, label, opt, current }) => (
+              <a href={href} class={opt ? 'opt' : undefined} aria-current={current ? 'page' : undefined}>
+                {label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </header>
+
+    <slot />
+
+    <footer>
+      <div class="wrap">
+        <p class="motto">Build. Experiment. Refine.</p>
+        <nav aria-label="Footer">
+          <a href="https://compound.ctlx.app" target="_blank" rel="noopener">Compound</a>
+          <a href="https://whyno.love" target="_blank" rel="noopener">whyno.love</a>
+        </nav>
+        <span class="credit">CTLX © 2026 · <span class="made"><ClaudeMark />Claude Opus 5.5</span></span>
+      </div>
+    </footer>
+  </body>
+</html>

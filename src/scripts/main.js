@@ -17,8 +17,12 @@ const plot = curve.ownerSVGElement;
 function drawCurve() {
   const { clientWidth: width, clientHeight: height } = plot;
   plot.setAttribute('viewBox', `0 0 ${width} ${height}`);
-  const points = samples.map((c, i) => `${((i * width) / 168).toFixed(1)} ${(height - 2 - (c / peak) * (height - 6)).toFixed(1)}`);
-  curve.setAttribute('d', 'M' + points.join('L'));
+  const points = samples.map((c, i) => `${((i * width) / 168).toFixed(1)} ${(height - 1 - (c / peak) * (height - 12)).toFixed(1)}`);
+  const line = 'M' + points.join('L');
+  curve.setAttribute('d', line);
+  document.getElementById('area').setAttribute('d', `${line}V${height}H0Z`);
+  // one hairline per dose after the first, which sits on the card edge
+  document.getElementById('doses').setAttribute('d', [7, 14, 21, 28].map((day) => `M${((day * width) / 42).toFixed(1)} 0V${height}`).join(''));
 }
 drawCurve();
 new ResizeObserver(drawCurve).observe(plot);
@@ -54,7 +58,7 @@ for (const type of ['wheel', 'touchstart']) addEventListener(type, () => glide++
 
 // Zarobenqo mark: draw-in, sheen, tilt toward the cursor
 const mark = document.getElementById('mark');
-const area = mark.closest('.card');
+const area = mark.closest('.project');
 const MOTION = ['--g-x', '--g-y', '--h-x', '--h-y', '--tilt-x', '--tilt-y', '--mx', '--my'];
 
 function sweep() {
@@ -93,3 +97,17 @@ if (!reduceMotion) {
     for (const name of MOTION) mark.style.removeProperty(name);
   });
 }
+
+// nav marks the section in view
+const navLinks = new Map([...document.querySelectorAll('.nav nav a')].map((a) => [a.hash.slice(1), a]));
+const spy = new IntersectionObserver(
+  (entries) => {
+    for (const { target, isIntersecting } of entries) {
+      if (!isIntersecting) continue;
+      for (const a of navLinks.values()) a.removeAttribute('aria-current');
+      navLinks.get(target.id)?.setAttribute('aria-current', 'true');
+    }
+  },
+  { rootMargin: '-40% 0px -55% 0px' },
+);
+for (const section of document.querySelectorAll('main > section')) spy.observe(section);
