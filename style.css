@@ -7,26 +7,29 @@
 }
 
 :root {
-  /* tokens shared with Zarobenqo and Compound */
-  --canvas: #090908;
-  --surface-1: #141413;
-  --surface-2: #1e1e1d;
-  --surface-3: #2a2a28;
-  --ink: #ffffff;
-  --ink-muted: #999999;
-  --accent: #0099ff;
-  --spotlight:
-    radial-gradient(70% 90% at 100% 0%, rgb(255 79 216 / 0.5) 0%, rgb(255 79 216 / 0.2) 35%, rgb(255 79 216 / 0) 70%),
-    linear-gradient(160deg, #7b3cff 0%, #4a1bb8 55%, #24095f 100%);
-  --on-spotlight-muted: rgb(255 255 255 / 0.78);
-  --r: 22px;
+  /* tokens from design.md */
+  --canvas: #000000;
+  --surface-card: #0a0a0c;
+  --surface-elevated: #101012;
+  --hairline: rgb(255 255 255 / 0.06);
+  --hairline-strong: rgb(255 255 255 / 0.14);
+  --ink: #fcfdff;
+  --body: rgb(252 253 255 / 0.86);
+  --mute: #a1a4a5;
+  --ash: #888e90;
+  --glow-orange: rgb(255 89 0 / 0.22);
+  --r-md: 8px;
+  --r-lg: 12px;
   --gap: 8px;
   --pad: 24px;
+  --display: 'Instrument Serif', 'Tiempos Headline', Georgia, serif;
+  --prose: Geist, 'Inter Tight', ui-sans-serif, system-ui, sans-serif;
+  --ui: Inter, ui-sans-serif, system-ui, sans-serif;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
   color-scheme: dark;
-  scrollbar-color: var(--surface-3) var(--canvas);
+  scrollbar-color: #2a2a2d var(--canvas);
 }
 
 html {
@@ -38,22 +41,21 @@ body {
   min-height: 100%;
   background: var(--canvas);
   color: var(--ink);
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-  font-feature-settings: 'cv01', 'cv05', 'cv11', 'ss03';
-  font-size: 0.9375rem;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
+  font-family: var(--prose);
+  font-size: 1rem;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
   -webkit-font-smoothing: antialiased;
-  caret-color: var(--accent);
+  caret-color: var(--ink);
 }
 
 ::selection {
-  background: var(--accent);
-  color: #fff;
+  background: var(--ink);
+  color: #000;
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 1px solid var(--ink);
   outline-offset: 3px;
 }
 
@@ -61,7 +63,9 @@ main {
   min-height: 100svh;
   display: grid;
   place-items: center;
-  padding: 40px 16px;
+  padding: 48px 16px;
+  /* one atmospheric wash, anchored at the top edge */
+  background: radial-gradient(48rem 26rem at 50% 0%, var(--glow-orange), transparent 70%);
 }
 
 /* ── stack: one card built from tiles ────────────────────── */
@@ -82,14 +86,16 @@ main {
   display: flex;
   flex-direction: column;
   padding: var(--pad);
-  border-radius: var(--r);
-  background: var(--surface-1);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-lg);
+  background: var(--surface-card);
   color: inherit;
   text-decoration: none;
   animation: tile-in 1000ms var(--ease) backwards;
   animation-delay: calc(var(--i) * 90ms + 100ms);
   transition:
     background-color 400ms var(--ease),
+    border-color 400ms var(--ease),
     transform 400ms var(--ease);
 }
 
@@ -98,16 +104,16 @@ a.tile:active {
 }
 
 h2 {
-  font-size: 1.375rem;
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.035em;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.4px;
 }
 
 .note {
-  color: var(--ink-muted);
+  color: var(--mute);
   font-size: 0.875rem;
-  line-height: 1.4;
+  line-height: 1.43;
   text-wrap: pretty;
 }
 
@@ -116,14 +122,14 @@ h2 {
   align-items: center;
   align-self: flex-start;
   gap: 6px;
-  min-height: 30px;
-  padding: 0 12px;
-  border-radius: 100px;
-  background: var(--surface-2);
-  color: var(--ink-muted);
-  font-size: 0.8125rem;
-  font-weight: 500;
-  line-height: 1;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: var(--surface-elevated);
+  color: var(--body);
+  font-family: var(--ui);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
@@ -141,11 +147,15 @@ h2 {
 }
 
 .pill.primary {
-  min-height: 36px;
-  padding: 0 14px 0 16px;
+  height: 36px;
+  padding: 8px 14px 8px 16px;
+  border-radius: var(--r-md);
   background: var(--ink);
   color: #000;
   font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.43;
+  transition: background-color 300ms var(--ease);
 }
 
 .foot {
@@ -154,7 +164,7 @@ h2 {
 
 /* ── profile ─────────────────────────────────────────────── */
 .profile {
-  padding-bottom: 28px;
+  padding: 32px 32px 36px;
 }
 
 .profile-top {
@@ -164,8 +174,8 @@ h2 {
 }
 
 .avatar {
-  width: 56px;
-  height: 56px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   object-fit: cover;
   user-select: none;
@@ -174,22 +184,23 @@ h2 {
 
 .profile .pill time {
   color: var(--ink);
+  font-weight: 500;
 }
 
 h1 {
-  margin-top: 56px;
-  margin-left: -0.04em;
-  font-size: clamp(3.25rem, 15vw, 5rem);
-  font-weight: 600;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
+  margin-top: 64px;
+  font-family: var(--display);
+  font-size: clamp(3.75rem, 19vw, 6rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.01em;
 }
 
 .bio {
-  margin-top: 16px;
-  max-width: 26ch;
-  color: var(--ink-muted);
-  font-size: 1.125rem;
+  margin-top: 12px;
+  max-width: 28ch;
+  color: var(--body);
+  font-size: 1.25rem;
   line-height: 1.3;
   text-wrap: balance;
 }
@@ -199,6 +210,15 @@ h1 {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.wordmark {
+  font-family: var(--ui);
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  font-feature-settings: 'cv01', 'cv05', 'cv11', 'ss03';
 }
 
 .zarobenqo .note,
@@ -216,19 +236,19 @@ h1 {
 }
 
 .built li {
-  padding: 5px 9px;
-  border-radius: 100px;
-  background: var(--surface-2);
-  color: var(--ink-muted);
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: var(--surface-elevated);
+  color: var(--body);
+  font-family: var(--ui);
   font-size: 0.75rem;
-  font-weight: 500;
-  line-height: 1;
+  line-height: 1.5;
+  letter-spacing: 0;
   white-space: nowrap;
 }
 
 .spotlight .built li {
-  background: rgb(255 255 255 / 0.16);
-  color: #fff;
+  background: rgb(255 255 255 / 0.07);
 }
 
 .past .built {
@@ -245,12 +265,8 @@ h1 {
 
 /* ── Compound: the one spotlight ─────────────────────────── */
 .spotlight {
-  background: var(--spotlight);
+  background: var(--surface-elevated);
   overflow: hidden;
-}
-
-.spotlight .note {
-  color: var(--on-spotlight-muted);
 }
 
 /* serum level across five weekly doses, drawn by main.js */
@@ -265,8 +281,8 @@ h1 {
 
 .curve path {
   fill: none;
-  stroke: #fff;
-  stroke-width: 1.5;
+  stroke: var(--ink);
+  stroke-width: 1.25;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-dasharray: 1;
@@ -275,6 +291,15 @@ h1 {
 
 .spotlight:hover .curve path {
   animation: draw-again 1800ms var(--ease-in-out);
+}
+
+.spotlight:hover,
+.link:hover {
+  border-color: rgb(255 255 255 / 0.24);
+}
+
+.spotlight:active .primary {
+  background: #f1f7fe;
 }
 
 .spotlight:hover .primary svg,
@@ -297,8 +322,9 @@ h1 {
   place-items: center;
   width: 36px;
   height: 36px;
-  border-radius: 50%;
-  background: var(--surface-2);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-md);
+  background: var(--surface-elevated);
   color: var(--ink);
   transition:
     background-color 400ms var(--ease),
@@ -307,13 +333,12 @@ h1 {
 
 .link:hover,
 .link:focus-visible {
-  background: var(--surface-2);
+  background: var(--surface-elevated);
 }
 
 .link:hover .go,
 .link:focus-visible .go {
-  background: var(--ink);
-  color: #000;
+  background: #1a1a1d;
 }
 
 .link:hover .go svg,
@@ -322,10 +347,27 @@ h1 {
 }
 
 /* ── discontinued ────────────────────────────────────────── */
+.past {
+  padding: 32px;
+}
+
+.past h2 {
+  font-family: var(--display);
+  font-size: 2.75rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+.past dl > div + div {
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline);
+}
+
 .past dl {
   display: grid;
   gap: 16px;
-  margin-top: 20px;
+  margin-top: 28px;
 }
 
 .past dl > div {
@@ -335,13 +377,14 @@ h1 {
 }
 
 .past dt {
+  font-size: 0.9375rem;
   font-weight: 500;
 }
 
 .past dd {
-  color: var(--ink-muted);
+  color: var(--mute);
   font-size: 0.875rem;
-  line-height: 1.4;
+  line-height: 1.43;
   text-wrap: pretty;
 }
 
@@ -493,7 +536,11 @@ h1 {
 @media (max-width: 520px) {
   :root {
     --pad: 20px;
-    --r: 20px;
+  }
+
+  .profile,
+  .past {
+    padding: 24px;
   }
 
   .pair:has(.zarobenqo) {
@@ -501,7 +548,11 @@ h1 {
   }
 
   h1 {
-    margin-top: 44px;
+    margin-top: 48px;
+  }
+
+  .bio {
+    font-size: 1.125rem;
   }
 
   .link {
