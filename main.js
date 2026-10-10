@@ -23,17 +23,6 @@ function drawCurve() {
 drawCurve();
 new ResizeObserver(drawCurve).observe(plot);
 
-// local time in Bratislava
-const clock = document.getElementById('clock');
-const format = new Intl.DateTimeFormat('en-GB', {
-  timeZone: 'Europe/Bratislava',
-  hour: '2-digit',
-  minute: '2-digit',
-});
-const tick = () => (clock.textContent = format.format(new Date()));
-tick();
-setInterval(tick, 10000);
-
 // Zarobenqo mark: draw-in, sheen, tilt toward the cursor
 const mark = document.getElementById('mark');
 const area = mark.closest('.card');

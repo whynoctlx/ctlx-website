@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="sk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CTLX logo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --canvas: #000000;
+    --surface: #16181a;
+    --ink: #ffffff;
+    --ink-muted: rgb(255 255 255 / .72);
+    --ink-faint: rgb(255 255 255 / .5);
+    --light-canvas: #ffffff;
+    --light-ink: #191c1f;
+    --ease-out: cubic-bezier(.16, 1, .3, 1);
+    --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; }
+
+  body {
+    min-height: 100dvh;
+    padding: 48px 16px 80px;
+    color: var(--ink);
+    background: var(--canvas);
+    font-family: Inter, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { color: #fff; background: #494fdf; }
+
+  .page { width: min(1080px, 100%); margin-inline: auto; display: grid; gap: 56px; }
+
+  header h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 500; letter-spacing: -.02em; }
+  header p { margin-top: 10px; max-width: 62ch; color: var(--ink-muted); font-size: 15px; line-height: 1.55; }
+  header button {
+    margin-top: 18px;
+    height: 48px;
+    padding: 0 28px;
+    border: 0;
+    border-radius: 100px;
+    color: #000;
+    background: var(--ink);
+    font: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  section { display: grid; gap: 16px; }
+  section > h2 { color: var(--ink-faint); font-size: 13px; font-weight: 400; }
+
+  .stage {
+    min-height: 300px;
+    padding: 56px 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 20px;
+    background: var(--surface);
+    overflow: hidden;
+  }
+
+  .stage.light { color: var(--light-ink); background: var(--light-canvas); }
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .grid .stage { min-height: 260px; }
+
+  /* ================= Mark =================
+     An X cut through its waist. The lower half is the Control key's caret, drawn at full strength;
+     the upper half sits back. On load the caret draws in, then the upper half; hover closes the cut. */
+  .mark {
+    --size: 44px;
+    --mx: 30%;
+    --my: 18%;
+    position: relative;
+    width: var(--size);
+    height: var(--size);
+    flex-shrink: 0;
+    display: block;
+    border-radius: 26%;
+    background:
+      radial-gradient(90% 90% at var(--mx) var(--my), rgb(255 255 255 / .16), transparent 60%),
+      linear-gradient(155deg, #26282b 0%, #0e0f10 50%, #000 100%);
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / .1),
+      inset 0 1px 0 rgb(255 255 255 / .18);
+    transform: perspective(calc(var(--size) * 5)) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+    transition: transform .6s var(--ease-out);
+    isolation: isolate;
+  }
+
+  .mark.is-tracking { transition: transform .12s linear; }
+
+  .mark.ivory {
+    background:
+      radial-gradient(90% 90% at var(--mx) var(--my), #fff, transparent 60%),
+      linear-gradient(155deg, #ffffff 0%, #f4f4f4 55%, #e2e2e7 100%);
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / .08);
+  }
+
+  .mark svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+
+  .mark path {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 8;
+    stroke-linejoin: miter;
+    stroke-miterlimit: 10;
+    transition: transform .6s var(--ease-out), stroke-opacity .6s var(--ease-out);
+  }
+
+  .mark .upper { stroke-opacity: .42; }
+  .mark.ivory path { stroke: #191c1f; }
+
+  /* hover: the cut closes into a whole X */
+  .mark.is-closed .upper { transform: translateY(4px); stroke-opacity: 1; }
+  .mark.is-closed .caret { transform: translateY(-4px); }
+
+  .mark::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+    background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / .22) 50%, transparent 65%) -150% 0 / 250% 100% no-repeat;
+    pointer-events: none;
+  }
+
+  .mark.sweep::after { animation: sweep 1.1s var(--ease-in-out); }
+
+  @keyframes sweep { to { background-position: 150% 0; } }
+
+  .mark [pathLength] { stroke-dasharray: 1; stroke-dashoffset: 0; }
+
+  .mark.intro { animation: settle 1.2s var(--ease-out) both; }
+  .mark.intro .caret { animation: draw .7s var(--ease-out) both, lift .9s var(--ease-out) both; }
+  .mark.intro .upper { animation: draw .7s var(--ease-out) .35s both; }
+
+  @keyframes draw { from { stroke-dashoffset: 1; } }
+  @keyframes lift { from { transform: translateY(10px); } }
+  @keyframes settle {
+    from { opacity: 0; transform: perspective(calc(var(--size) * 5)) rotateX(18deg) rotateY(-14deg) scale(.92); }
+  }
+
+  /* ================= Lockups ================= */
+  .lockup { display: flex; align-items: center; gap: calc(var(--scale, 1) * 12px); }
+
+  .wordmark {
+    font-size: calc(var(--scale, 1) * 26px);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -.03em;
+  }
+
+  .lockup.hero { --scale: 2.4; }
+  .lockup.hero .mark { --size: 96px; }
+
+  .stacked { display: grid; justify-items: center; gap: 20px; }
+  .stacked .mark { --size: 80px; }
+  .stacked .wordmark { font-size: 34px; }
+
+  .nav-bar {
+    width: min(520px, 100%);
+    height: 64px;
+    padding: 0 12px 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 20px;
+    background: #000;
+  }
+
+  .nav-bar .wordmark { font-size: 22px; }
+  .nav-bar .lockup { gap: 10px; }
+  .nav-bar .mark { --size: 32px; }
+  .nav-bar .pill { height: 36px; padding: 0 16px; display: grid; place-items: center; border-radius: 100px; color: #000; background: #fff; font-size: 14px; font-weight: 600; }
+
+  .icons { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: center; gap: 32px; }
+  .icon-item { display: grid; justify-items: center; gap: 12px; color: var(--ink-faint); font-size: 12px; }
+
+  footer { color: var(--ink-faint); font-size: 13px; line-height: 1.6; }
+  footer code { color: var(--ink-muted); font-family: ui-monospace, monospace; font-size: 12px; }
+
+  @media (max-width: 720px) {
+    .grid { grid-template-columns: 1fr; }
+    .lockup.hero { --scale: 1.5; }
+    .lockup.hero .mark { --size: 60px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mark, .mark path { transition: none; }
+    .mark.intro, .mark.intro *, .mark.sweep::after { animation: none !important; }
+  }
+</style>
+</head>
+<body>
+<template id="mark-layers">
+  <svg viewBox="0 0 100 100" aria-hidden="true">
+    <path class="upper" pathLength="1" d="M27 25 L50 46 L73 25"/>
+    <path class="caret" pathLength="1" d="M27 75 L50 54 L73 75"/>
+  </svg>
+</template>
+
+<main class="page">
+  <header>
+    <h1>CTLX, návrh loga</h1>
+    <p>X prerezané v páse. Spodná polovica je znak klávesu Control (⌃) v plnej sile, horná ustupuje do pozadia. Spolu Control + X. Pri načítaní sa ťahy dokreslia, pri prejdení myšou sa rez zavrie do celého X, dlaždica sa nakloní a prebehne cez ňu lesk.</p>
+    <button type="button" id="replay">Prehrať animáciu znova</button>
+  </header>
+
+  <section>
+    <h2>Hlavné logo</h2>
+    <div class="stage">
+      <div class="lockup hero">
+        <span class="mark" data-mark data-parallax></span>
+        <span class="wordmark">CTLX</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="grid">
+    <section>
+      <h2>Na výšku</h2>
+      <div class="stage">
+        <div class="stacked">
+          <span class="mark" data-mark data-parallax></span>
+          <span class="wordmark">CTLX</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Svetlá téma</h2>
+      <div class="stage light">
+        <div class="lockup" style="--scale: 1.5">
+          <span class="mark ivory" data-mark data-parallax style="--size: 60px"></span>
+          <span class="wordmark">CTLX</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section>
+    <h2>V hlavičke stránky</h2>
+    <div class="stage">
+      <div class="nav-bar">
+        <div class="lockup">
+          <span class="mark" data-mark data-parallax></span>
+          <span class="wordmark">CTLX</span>
+        </div>
+        <span class="pill">Open</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Ikona</h2>
+    <div class="stage">
+      <div class="icons">
+        <div class="icon-item"><span class="mark" data-mark data-parallax style="--size: 160px"></span>512 px</div>
+        <div class="icon-item"><span class="mark" data-mark style="--size: 96px"></span>180 px</div>
+        <div class="icon-item"><span class="mark" data-mark style="--size: 56px"></span>64 px</div>
+        <div class="icon-item"><span class="mark" data-mark style="--size: 32px"></span>32 px</div>
+        <div class="icon-item"><span class="mark" data-mark style="--size: 16px"></span>16 px</div>
+        <div class="icon-item"><span class="mark ivory" data-mark style="--size: 96px"></span>svetlá</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Písmo Inter 600, farby z <code>DESIGN.md</code>. Statická verzia: <code>assets/ctlx.svg</code>. Na stránke: <code>.brand</code> v <code>index.html</code>.
+  </footer>
+</main>
+
+<script>
+  const layers = document.getElementById("mark-layers");
+  for (const mark of document.querySelectorAll("[data-mark]")) mark.append(layers.content.cloneNode(true));
+
+  const marks = [...document.querySelectorAll("[data-mark]")];
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function sweep(mark) {
+    mark.classList.remove("sweep");
+    void mark.offsetWidth;
+    mark.classList.add("sweep");
+  }
+
+  function playIntro() {
+    if (reduceMotion) return;
+    marks.forEach((mark, index) => {
+      mark.classList.remove("intro", "sweep");
+      void mark.offsetWidth;
+      mark.style.animationDelay = `${index * 70}ms`;
+      mark.classList.add("intro");
+      window.setTimeout(() => sweep(mark), 1100 + index * 70);
+    });
+  }
+
+  for (const mark of marks) {
+    mark.addEventListener("animationend", (event) => {
+      if (event.target === mark && event.animationName === "settle") mark.classList.remove("intro");
+    });
+  }
+
+  document.getElementById("replay").addEventListener("click", playIntro);
+  playIntro();
+
+  // Pointer: the cut closes, the tile tilts toward the cursor, the highlight follows.
+  const MOTION = ["--tilt-x", "--tilt-y", "--mx", "--my"];
+
+  for (const mark of document.querySelectorAll("[data-parallax]")) {
+    const area = mark.closest(".stage") || mark;
+
+    area.addEventListener("pointerenter", (event) => {
+      if (event.pointerType !== "mouse" || reduceMotion) return;
+      mark.classList.add("is-closed");
+      sweep(mark);
+    });
+
+    area.addEventListener("pointermove", (event) => {
+      if (event.pointerType !== "mouse" || reduceMotion) return;
+      const box = mark.getBoundingClientRect();
+      const x = Math.max(-1, Math.min(1, ((event.clientX - box.left) / box.width - 0.5) * 1.4));
+      const y = Math.max(-1, Math.min(1, ((event.clientY - box.top) / box.height - 0.5) * 1.4));
+      mark.classList.add("is-tracking");
+      mark.style.setProperty("--tilt-x", `${(-y * 9).toFixed(2)}deg`);
+      mark.style.setProperty("--tilt-y", `${(x * 9).toFixed(2)}deg`);
+      mark.style.setProperty("--mx", `${(50 + x * 40).toFixed(1)}%`);
+      mark.style.setProperty("--my", `${(50 + y * 40).toFixed(1)}%`);
+    });
+
+    area.addEventListener("pointerleave", () => {
+      mark.classList.remove("is-tracking", "is-closed");
+      for (const name of MOTION) mark.style.removeProperty(name);
+    });
+  }
+</script>
+</body>
+</html>

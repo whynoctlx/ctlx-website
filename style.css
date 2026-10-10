@@ -78,30 +78,55 @@ body {
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   color: inherit;
-  font-size: 1.5rem;
-  font-weight: 500;
-  letter-spacing: -0.02em;
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
   text-decoration: none;
 }
 
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  height: 36px;
-  padding: 0 16px;
-  border-radius: 9999px;
-  background: var(--surface-elevated);
-  color: var(--on-dark-mute);
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0;
-  font-variant-numeric: tabular-nums;
+/* CTLX mark (brand/ctlx-logo.html): an X cut at the waist, the lower half is the Control caret */
+.brand-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 26%;
+  background:
+    radial-gradient(90% 90% at 30% 18%, rgb(255 255 255 / 0.16), transparent 60%),
+    linear-gradient(155deg, #26282b 0%, #0e0f10 50%, #000 100%);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.1),
+    inset 0 1px 0 rgb(255 255 255 / 0.18);
 }
 
-.chip time {
-  color: var(--on-dark);
+.brand-mark path {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 8;
+  stroke-miterlimit: 10;
+  stroke-dasharray: 1;
+  animation: draw 700ms var(--ease) 200ms backwards;
+  transition:
+    transform 600ms var(--ease),
+    stroke-opacity 600ms var(--ease);
+}
+
+.brand-mark .upper {
+  stroke-opacity: 0.42;
+  animation-delay: 550ms;
+}
+
+/* hover closes the cut into a whole X */
+.brand:hover .upper {
+  transform: translateY(4px);
+  stroke-opacity: 1;
+}
+
+.brand:hover .caret {
+  transform: translateY(-4px);
 }
 
 /* ── buttons ─────────────────────────────────────────────── */
