@@ -255,6 +255,25 @@ a.button:active {
   text-wrap: balance;
 }
 
+.built-by {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  margin-top: 32px;
+  padding: 0 20px;
+  border-radius: 9999px;
+  background: var(--surface-soft);
+  color: var(--ink);
+  font-family: var(--mono);
+}
+
+.built-by svg {
+  width: 18px;
+  height: 18px;
+  fill: #d97757;
+}
+
 .hero > * {
   animation: hero-in 1000ms var(--ease) backwards;
   animation-delay: calc(var(--i) * 100ms + 100ms);
