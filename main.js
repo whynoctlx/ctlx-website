@@ -36,7 +36,7 @@ setInterval(tick, 10000);
 
 // Zarobenqo mark: draw-in, sheen, tilt toward the cursor
 const mark = document.getElementById('mark');
-const area = mark.closest('.tile');
+const area = mark.closest('.card');
 const MOTION = ['--g-x', '--g-y', '--h-x', '--h-y', '--tilt-x', '--tilt-y', '--mx', '--my'];
 
 function sweep() {
