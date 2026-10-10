@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..600&family=Inter:wght@400..600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..600&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
@@ -33,24 +33,21 @@
     </svg>
 
     <main>
-      <article class="card">
-        <header class="head" style="--i: 0">
-          <div class="avatar">
-            <img src="assets/profile.jpeg" alt="" width="76" height="76" draggable="false" />
+      <div class="stack">
+        <header class="tile profile" style="--i: 0">
+          <div class="profile-top">
+            <img class="avatar" src="assets/profile.jpeg" alt="" width="56" height="56" draggable="false" />
+            <p class="pill">
+              Bratislava
+              <time id="clock" aria-label="Local time in Bratislava"></time>
+            </p>
           </div>
-          <p class="place">
-            <span>Bratislava, SK</span>
-            <time id="clock" aria-label="Local time in Bratislava"></time>
-          </p>
+          <h1>citalopram</h1>
+          <p class="bio">Builds tools, trades markets, ships things that compound.</p>
         </header>
 
-        <h1 style="--i: 1">citalopram</h1>
-        <p class="bio" style="--i: 2">
-          Builds tools, trades markets, ships things that compound.
-        </p>
-
-        <ul class="work">
-          <li class="feature" style="--i: 3">
+        <section class="pair" aria-label="Projects">
+          <article class="tile zarobenqo" style="--i: 1">
             <div class="lockup">
               <span class="mark" id="mark">
                 <svg class="hair" viewBox="0 0 100 100" aria-hidden="true">
@@ -62,76 +59,66 @@
                   <path class="q-tail" pathLength="1" d="M70 70 L80 80" />
                 </svg>
               </span>
-              <span class="wordmark">Zarobenqo</span>
-              <span class="private">
-                <svg viewBox="0 0 16 16" aria-hidden="true">
-                  <path d="M4 7.5h8v6H4zM5.75 7.5V5.25a2.25 2.25 0 0 1 4.5 0V7.5" />
-                </svg>
-                Private
-              </span>
+              <h2 class="wordmark">Zarobenqo</h2>
             </div>
             <p class="note">
               The original courier app, rebuilt. Same APIs underneath, a new interface throughout,
               and earnings added.
             </p>
-          </li>
+            <ul class="built" aria-label="Built with"><li>Next.js 16</li><li>Turso</li><li>Drizzle</li></ul>
+            <p class="pill foot">
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M4 7.5h8v6H4zM5.75 7.5V5.25a2.25 2.25 0 0 1 4.5 0V7.5" />
+              </svg>
+              Private
+            </p>
+          </article>
 
-          <li style="--i: 4">
-            <a class="row" href="https://compound.ctlx.app" target="_blank" rel="noopener">
-              <span class="name">Compound</span>
-              <span class="note">
-                Steroid cycle plotter. Models active compound levels over time from half-lives
-                published in clinical studies and drug labels.
-              </span>
-              <span class="go" aria-hidden="true">
-                <svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg>
-              </span>
-            </a>
-          </li>
+          <a class="tile spotlight" style="--i: 2" href="https://compound.ctlx.app" target="_blank" rel="noopener">
+            <h2>Compound</h2>
+            <p class="note">
+              Steroid cycle plotter. Models active compound levels from half-lives published in
+              clinical studies and drug labels.
+            </p>
+            <ul class="built" aria-label="Built with"><li>Next.js 16</li><li>Lightweight Charts</li></ul>
+            <svg class="curve" aria-hidden="true">
+              <path id="curve" pathLength="1" />
+            </svg>
+            <span class="pill primary foot">Open <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg></span>
+          </a>
+        </section>
 
-          <li style="--i: 5">
-            <a class="row" href="https://ctlx.app" target="_blank" rel="noopener">
-              <span class="name">ctlx.app</span>
-              <span class="note">Only this intro card, for now.</span>
-              <span class="go" aria-hidden="true">
-                <svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg>
-              </span>
-            </a>
-          </li>
+        <section class="pair" aria-label="Links">
+          <a class="tile link" style="--i: 3" href="https://ctlx.app" target="_blank" rel="noopener">
+            <span class="go"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg></span>
+            <h2>ctlx.app</h2>
+            <p class="note">Only this intro card, for now.</p>
+          </a>
+          <a class="tile link" style="--i: 4" href="https://whyno.love" target="_blank" rel="noopener">
+            <span class="go"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg></span>
+            <h2>whyno.love</h2>
+            <p class="note">Second node.</p>
+          </a>
+        </section>
 
-          <li style="--i: 6">
-            <a class="row" href="https://whyno.love" target="_blank" rel="noopener">
-              <span class="name">whyno.love</span>
-              <span class="note">Second node.</span>
-              <span class="go" aria-hidden="true">
-                <svg viewBox="0 0 16 16"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg>
-              </span>
-            </a>
-          </li>
-        </ul>
-
-        <h2 style="--i: 7">Discontinued</h2>
-        <ul class="work past">
-          <li style="--i: 8">
-            <div class="row">
-              <span class="name">Neutron.technology</span>
-              <span class="note">A Lua script for Neverlose.cc. The most advanced semirage helper available.</span>
+        <section class="tile past" style="--i: 5">
+          <h2>Discontinued</h2>
+          <dl>
+            <div>
+              <dt>Neutron.technology<ul class="built" aria-label="Built with"><li>Lua</li></ul></dt>
+              <dd>A Lua script for Neverlose.cc. The most advanced semirage helper available.</dd>
             </div>
-          </li>
-          <li style="--i: 9">
-            <div class="row">
-              <span class="name">CTLX TradeLog</span>
-              <span class="note">A simple JSON trade logger. It worked the numbers out of the data, so nobody had to by hand.</span>
+            <div>
+              <dt>CTLX TradeLog<ul class="built" aria-label="Built with"><li>Next.js 16</li></ul></dt>
+              <dd>A simple JSON trade logger. It worked the numbers out of the data, so nobody had to by hand.</dd>
             </div>
-          </li>
-          <li style="--i: 10">
-            <div class="row">
-              <span class="name">CTLX Atlas</span>
-              <span class="note">An all-in-one trading platform on a trading API, built for prop firms and multiple accounts.</span>
+            <div>
+              <dt>CTLX Atlas<ul class="built" aria-label="Built with"><li>Next.js 16</li></ul></dt>
+              <dd>An all-in-one trading platform on a trading API, built for prop firms and multiple accounts.</dd>
             </div>
-          </li>
-        </ul>
-      </article>
+          </dl>
+        </section>
+      </div>
     </main>
 
     <script src="main.js"></script>

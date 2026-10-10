@@ -7,20 +7,26 @@
 }
 
 :root {
-  /* obsidian and ivory, shared with the Zarobenqo mark */
+  /* tokens shared with Zarobenqo and Compound */
   --canvas: #090908;
-  --ink: #f1efe8;
-  --ink-dim: #b3b0a7;
-  --ink-quiet: #8a877f;
-  --light: 255 255 255;
+  --surface-1: #141413;
+  --surface-2: #1e1e1d;
+  --surface-3: #2a2a28;
+  --ink: #ffffff;
+  --ink-muted: #999999;
+  --accent: #0099ff;
+  --spotlight:
+    radial-gradient(90% 140% at 100% 0%, rgb(255 79 216 / 0.9) 0%, rgb(255 79 216 / 0.35) 35%, rgb(255 79 216 / 0) 70%),
+    linear-gradient(160deg, #7b3cff 0%, #4a1bb8 55%, #24095f 100%);
+  --on-spotlight-muted: rgb(255 255 255 / 0.78);
+  --r: 22px;
+  --gap: 8px;
+  --pad: 24px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --display: 'Bodoni Moda', 'Didot', 'Bodoni 72', serif;
-  --text: Inter, ui-sans-serif, system-ui, sans-serif;
-  --pad: 44px;
 
   color-scheme: dark;
-  scrollbar-color: #2b2b29 var(--canvas);
+  scrollbar-color: var(--surface-3) var(--canvas);
 }
 
 html {
@@ -32,21 +38,23 @@ body {
   min-height: 100%;
   background: var(--canvas);
   color: var(--ink);
-  font-family: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: 'cv01', 'cv05', 'cv11', 'ss03';
   font-size: 0.9375rem;
-  line-height: 1.55;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
-  caret-color: var(--ink);
+  caret-color: var(--accent);
 }
 
 ::selection {
-  background: var(--ink);
-  color: var(--canvas);
+  background: var(--accent);
+  color: #fff;
 }
 
 :focus-visible {
-  outline: 1.5px solid var(--ink);
-  outline-offset: 4px;
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 main {
@@ -54,290 +62,292 @@ main {
   display: grid;
   place-items: center;
   padding: 40px 16px;
-  /* one lamp above, the room falls off to black */
-  background:
-    radial-gradient(44rem 30rem at 50% -6rem, rgb(var(--light) / 0.1), transparent 70%),
-    radial-gradient(90rem 60rem at 50% 110%, #000, transparent 60%);
 }
 
-/* ── card ────────────────────────────────────────────────── */
-.card {
-  position: relative;
+/* ── stack: one card built from tiles ────────────────────── */
+.stack {
   width: min(100%, 31rem);
-  padding: var(--pad) var(--pad) calc(var(--pad) - 20px);
-  border-radius: 16px;
-  background: linear-gradient(160deg, #1d1d1b 0%, #131312 42%, #0c0c0b 100%);
-  box-shadow:
-    inset 0 1px 0 rgb(var(--light) / 0.14),
-    inset 0 0 0 1px rgb(var(--light) / 0.045),
-    0 2px 4px rgb(0 0 0 / 0.5),
-    0 48px 90px -28px rgb(0 0 0 / 0.9);
-  overflow: hidden;
-  animation: card-in 1200ms var(--ease) backwards;
-}
-
-/* light that follows the pointer */
-.card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    22rem circle at var(--mx, 50%) var(--my, 0%),
-    rgb(var(--light) / 0.07),
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 700ms var(--ease);
-  pointer-events: none;
-}
-
-.card:hover::before {
-  opacity: 1;
-}
-
-.card > * {
-  position: relative;
-}
-
-.card > [style],
-.work > li {
-  animation: rise 1000ms var(--ease) backwards;
-  animation-delay: calc(var(--i) * 90ms + 300ms);
-}
-
-/* ── head ────────────────────────────────────────────────── */
-.head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-
-.avatar {
-  width: 76px;
-  height: 76px;
-  padding: 3px;
-  border-radius: 50%;
-  background: linear-gradient(155deg, rgb(var(--light) / 0.55), rgb(var(--light) / 0.06) 55%);
-  box-shadow: 0 10px 24px -8px rgb(0 0 0 / 0.8);
-  animation: avatar-in 1300ms var(--ease) 300ms backwards;
-}
-
-.avatar img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  user-select: none;
-  box-shadow: 0 0 0 2px #131312;
-}
-
-.place {
   display: grid;
-  justify-items: end;
-  color: var(--ink-quiet);
-  font-size: 0.8125rem;
-  line-height: 1.5;
-  font-variant-numeric: tabular-nums;
+  gap: var(--gap);
 }
 
-.place time {
-  color: var(--ink-dim);
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
 }
 
-h1 {
-  margin-top: 36px;
-  font-family: var(--display);
-  font-size: clamp(3rem, 14vw, 4.25rem);
-  font-weight: 400;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  font-variation-settings: 'opsz' 96;
-}
-
-.bio {
-  margin-top: 18px;
-  max-width: 27ch;
-  color: var(--ink-dim);
-  font-size: 1.0625rem;
-  line-height: 1.5;
-  text-wrap: balance;
-}
-
-/* ── work ────────────────────────────────────────────────── */
-.work {
-  list-style: none;
-  margin-top: 40px;
-}
-
-/* hairline of light between entries, as in the mark */
-.work > li {
+.tile {
   position: relative;
-}
-
-.work > li::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    rgb(var(--light) / 0.02),
-    rgb(var(--light) / 0.2) 30%,
-    rgb(var(--light) / 0.2) 70%,
-    rgb(var(--light) / 0.02)
-  );
-  transform-origin: left;
-  animation: rule-in 1400ms var(--ease) backwards;
-  animation-delay: calc(var(--i) * 90ms + 350ms);
-}
-
-.feature {
-  padding: 26px 0 24px;
-}
-
-.lockup {
   display: flex;
-  align-items: center;
-  gap: 14px;
+  flex-direction: column;
+  padding: var(--pad);
+  border-radius: var(--r);
+  background: var(--surface-1);
+  color: inherit;
+  text-decoration: none;
+  animation: tile-in 1000ms var(--ease) backwards;
+  animation-delay: calc(var(--i) * 90ms + 100ms);
+  transition:
+    background-color 400ms var(--ease),
+    transform 400ms var(--ease);
 }
 
-.wordmark {
-  font-size: 1.5rem;
+a.tile:active {
+  transform: scale(0.985);
+}
+
+h2 {
+  font-size: 1.375rem;
   font-weight: 600;
-  line-height: 1;
+  line-height: 1.1;
   letter-spacing: -0.035em;
 }
 
-.private {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-left: auto;
-  color: var(--ink-quiet);
-  font-size: 0.8125rem;
+.note {
+  color: var(--ink-muted);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  text-wrap: pretty;
 }
 
-.private svg {
+.pill {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 12px;
+  border-radius: 100px;
+  background: var(--surface-2);
+  color: var(--ink-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.pill svg,
+.go svg {
   width: 14px;
   height: 14px;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.5;
+  stroke-linecap: round;
   stroke-linejoin: round;
+  transition: transform 400ms var(--ease);
 }
 
-.feature .note {
-  margin-top: 16px;
-  max-width: 38ch;
+.pill.primary {
+  min-height: 36px;
+  padding: 0 14px 0 16px;
+  background: var(--ink);
+  color: #000;
+  font-size: 0.875rem;
 }
 
-.row {
-  display: grid;
-  grid-template-columns: 1fr 40px;
-  column-gap: 20px;
+.foot {
+  margin-top: auto;
+}
+
+/* ── profile ─────────────────────────────────────────────── */
+.profile {
+  padding-bottom: 28px;
+}
+
+.profile-top {
+  display: flex;
   align-items: center;
-  padding: 20px 0;
-  color: inherit;
-  text-decoration: none;
+  justify-content: space-between;
 }
 
-div.row {
-  grid-template-columns: 1fr;
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  user-select: none;
+  animation: avatar-in 1200ms var(--ease) 250ms backwards;
 }
 
-h2 {
-  margin-top: 44px;
-  padding-bottom: 18px;
-  font-family: var(--display);
-  font-size: 1.625rem;
+.profile .pill time {
+  color: var(--ink);
+}
+
+h1 {
+  margin-top: 56px;
+  margin-left: -0.04em;
+  font-size: clamp(3.25rem, 15vw, 5rem);
+  font-weight: 600;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.bio {
+  margin-top: 16px;
+  max-width: 26ch;
+  color: var(--ink-muted);
+  font-size: 1.125rem;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+/* ── Zarobenqo ───────────────────────────────────────────── */
+.lockup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.zarobenqo .note,
+.spotlight .note {
+  margin-top: 16px;
+}
+
+/* what each project was built on */
+.built {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  list-style: none;
+  margin-top: 12px;
+}
+
+.built li {
+  padding: 5px 9px;
+  border-radius: 100px;
+  background: var(--surface-2);
+  color: var(--ink-muted);
+  font-size: 0.75rem;
   font-weight: 500;
   line-height: 1;
-  letter-spacing: -0.01em;
-  font-variation-settings: 'opsz' 20;
+  white-space: nowrap;
 }
 
-.past .name {
-  color: var(--ink-dim);
+.spotlight .built li {
+  background: rgb(255 255 255 / 0.16);
+  color: #fff;
 }
 
-div.row .note {
-  max-width: 44ch;
+.past .built {
+  margin-top: 8px;
 }
 
-.name {
-  font-size: 1.0625rem;
-  font-weight: 500;
-  letter-spacing: -0.015em;
-  transition: transform 500ms var(--ease);
+.zarobenqo .foot {
+  margin-top: auto;
 }
 
-.note {
+.zarobenqo .built {
+  margin-bottom: 24px;
+}
+
+/* ── Compound: the one spotlight ─────────────────────────── */
+.spotlight {
+  background: var(--spotlight);
+  overflow: hidden;
+}
+
+.spotlight .note {
+  color: var(--on-spotlight-muted);
+}
+
+/* serum level across five weekly doses, drawn by main.js */
+.curve {
   display: block;
-  grid-column: 1;
-  color: var(--ink-quiet);
-  font-size: 0.875rem;
-  line-height: 1.5;
-  text-wrap: pretty;
-  transition: transform 500ms var(--ease);
+  width: calc(100% + var(--pad) * 2);
+  min-height: 60px;
+  margin: 16px calc(var(--pad) * -1) 16px;
+  flex: 1 0 60px;
+  overflow: visible;
 }
 
-.name + .note {
-  margin-top: 3px;
-}
-
-.go {
-  grid-area: 1 / 2 / span 2;
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  color: var(--ink-dim);
-  box-shadow: inset 0 0 0 1px rgb(var(--light) / 0.14);
-  transition:
-    background-color 500ms var(--ease),
-    color 500ms var(--ease),
-    box-shadow 500ms var(--ease);
-}
-
-.go svg {
-  width: 16px;
-  height: 16px;
+.curve path {
   fill: none;
-  stroke: currentColor;
+  stroke: #fff;
   stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
-  transition: transform 500ms var(--ease);
+  stroke-dasharray: 1;
+  animation: draw 2200ms var(--ease-in-out) 700ms backwards;
 }
 
-a.row:hover .name,
-a.row:hover .note,
-a.row:focus-visible .name,
-a.row:focus-visible .note {
-  transform: translateX(6px);
+.spotlight:hover .curve path {
+  animation: draw-again 1800ms var(--ease-in-out);
 }
 
-a.row:hover .go,
-a.row:focus-visible .go {
+.spotlight:hover .primary svg,
+.spotlight:focus-visible .primary svg {
+  transform: translate(2px, -2px);
+}
+
+/* ── links ───────────────────────────────────────────────── */
+.link {
+  min-height: 148px;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.go {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  color: var(--ink);
+  transition:
+    background-color 400ms var(--ease),
+    color 400ms var(--ease);
+}
+
+.link:hover,
+.link:focus-visible {
+  background: var(--surface-2);
+}
+
+.link:hover .go,
+.link:focus-visible .go {
   background: var(--ink);
-  color: var(--canvas);
-  box-shadow: inset 0 0 0 1px var(--ink);
+  color: #000;
 }
 
-a.row:hover .go svg,
-a.row:focus-visible .go svg {
+.link:hover .go svg,
+.link:focus-visible .go svg {
   transform: translate(1.5px, -1.5px);
 }
 
-a.row:active .go {
-  transform: scale(0.94);
+/* ── discontinued ────────────────────────────────────────── */
+.past dl {
+  display: grid;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.past dl > div {
+  display: grid;
+  grid-template-columns: 9.5rem 1fr;
+  gap: 16px;
+}
+
+.past dt {
+  font-weight: 500;
+}
+
+.past dd {
+  color: var(--ink-muted);
+  font-size: 0.875rem;
+  line-height: 1.4;
+  text-wrap: pretty;
 }
 
 /* ── Zarobenqo mark (brand/zarobenqo-logo.html) ──────────── */
 .mark {
-  --size: 48px;
+  --size: 44px;
   --mx: 30%;
   --my: 20%;
   position: relative;
@@ -421,9 +431,9 @@ a.row:active .go {
   stroke-dashoffset: 0;
 }
 
-/* strokes draw in once the entry has risen */
+/* strokes draw in once the tile has landed */
 .mark.intro {
-  --d: 750ms;
+  --d: 600ms;
 }
 
 .mark.intro .z {
@@ -443,19 +453,11 @@ a.row:active .go {
 }
 
 /* ── motion ──────────────────────────────────────────────── */
-@keyframes card-in {
+@keyframes tile-in {
   from {
     opacity: 0;
-    transform: translateY(22px) scale(0.975);
-    filter: blur(12px);
-  }
-}
-
-@keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-    filter: blur(5px);
+    transform: translateY(20px) scale(0.97);
+    filter: blur(10px);
   }
 }
 
@@ -463,20 +465,20 @@ a.row:active .go {
   from {
     opacity: 0;
     clip-path: circle(0% at 50% 50%);
-    transform: scale(1.2);
+    transform: scale(1.25);
   }
   to {
     clip-path: circle(50% at 50% 50%);
   }
 }
 
-@keyframes rule-in {
+@keyframes draw {
   from {
-    transform: scaleX(0);
+    stroke-dashoffset: 1;
   }
 }
 
-@keyframes draw {
+@keyframes draw-again {
   from {
     stroke-dashoffset: 1;
   }
@@ -488,17 +490,27 @@ a.row:active .go {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 520px) {
   :root {
-    --pad: 26px;
+    --pad: 20px;
+    --r: 20px;
+  }
+
+  .pair:has(.zarobenqo) {
+    grid-template-columns: 1fr;
   }
 
   h1 {
-    margin-top: 30px;
+    margin-top: 44px;
   }
 
-  .work {
-    margin-top: 32px;
+  .link {
+    min-height: 132px;
+  }
+
+  .past dl > div {
+    grid-template-columns: 1fr;
+    gap: 3px;
   }
 }
 

@@ -1,12 +1,27 @@
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// pointer light on the card
-const card = document.querySelector('.card');
-card.addEventListener('pointermove', (e) => {
-  const rect = card.getBoundingClientRect();
-  card.style.setProperty('--mx', e.clientX - rect.left + 'px');
-  card.style.setProperty('--my', e.clientY - rect.top + 'px');
-});
+// Compound curve: five weekly doses, 1 d absorption and 4.5 d elimination half-lives
+const level = (t) => {
+  let c = 0;
+  for (let dose = 0; dose <= 28 && dose < t; dose += 7) {
+    c += Math.exp((-Math.LN2 / 4.5) * (t - dose)) - Math.exp(-Math.LN2 * (t - dose));
+  }
+  return c;
+};
+const samples = Array.from({ length: 169 }, (_, i) => level(i / 4));
+const peak = Math.max(...samples);
+const curve = document.getElementById('curve');
+const plot = curve.ownerSVGElement;
+
+// drawn in the svg's own pixels so the stroke keeps its weight at any tile size
+function drawCurve() {
+  const { clientWidth: width, clientHeight: height } = plot;
+  plot.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  const points = samples.map((c, i) => `${((i * width) / 168).toFixed(1)} ${(height - 2 - (c / peak) * (height - 6)).toFixed(1)}`);
+  curve.setAttribute('d', 'M' + points.join('L'));
+}
+drawCurve();
+new ResizeObserver(drawCurve).observe(plot);
 
 // local time in Bratislava
 const clock = document.getElementById('clock');
@@ -21,7 +36,7 @@ setInterval(tick, 10000);
 
 // Zarobenqo mark: draw-in, sheen, tilt toward the cursor
 const mark = document.getElementById('mark');
-const area = mark.closest('.feature');
+const area = mark.closest('.tile');
 const MOTION = ['--g-x', '--g-y', '--h-x', '--h-y', '--tilt-x', '--tilt-y', '--mx', '--my'];
 
 function sweep() {
@@ -32,7 +47,7 @@ function sweep() {
 
 if (!reduceMotion) {
   mark.classList.add('intro');
-  setTimeout(sweep, 2300);
+  setTimeout(sweep, 2100);
 
   area.addEventListener('pointerenter', (e) => {
     if (e.pointerType === 'mouse') sweep();
