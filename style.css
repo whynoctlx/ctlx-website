@@ -494,6 +494,57 @@ a.button:active {
   transform-origin: left;
 }
 
+/* weekly share per model: one bar, three segments */
+.usage .split-bar {
+  display: flex;
+  gap: 2px;
+  background: none;
+}
+
+.usage .split-bar i {
+  flex: none;
+  width: calc(var(--p) * 100% - 2px);
+  min-width: 4px;
+  border-radius: 9999px;
+}
+
+.split-bar i:nth-child(2),
+.legend li:nth-child(2)::before {
+  background: var(--body);
+}
+
+.split-bar i:nth-child(3),
+.legend li:nth-child(3)::before {
+  background: var(--hairline-strong);
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  list-style: none;
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend li::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ink);
+}
+
+.legend b {
+  color: var(--ink);
+  font-family: var(--mono);
+  font-weight: 400;
+}
+
 .usage .when {
   grid-column: 1 / -1;
   font-size: 0.875rem;
