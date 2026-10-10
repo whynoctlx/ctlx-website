@@ -5,14 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>citalopram</title>
     <meta name="description" content="citalopram — builds tools, trades markets, ships things that compound." />
-    <meta name="theme-color" content="#000000" />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="icon" type="image/svg+xml" href="assets/ctlx.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..600&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -39,182 +36,128 @@
             <path class="upper" pathLength="1" d="M27 25 L50 46 L73 25" />
             <path class="caret" pathLength="1" d="M27 75 L50 54 L73 75" />
           </svg>
-          CTLX
         </a>
+        <nav aria-label="Sections">
+          <a href="#projects">Projects</a>
+          <a href="#vibecoding">Vibecoding</a>
+          <a href="#discontinued">Discontinued</a>
+        </nav>
+        <a class="button" href="https://compound.ctlx.app" target="_blank" rel="noopener">Compound</a>
       </div>
     </header>
 
     <main id="top">
-      <section class="hero">
-        <div class="wrap">
-          <div class="hero-copy">
-            <h1 style="--i: 0">citalopram</h1>
-            <p class="lede" style="--i: 1">Builds tools, trades markets, ships things that compound.</p>
-            <div class="actions" style="--i: 2">
-              <a class="button primary" href="https://compound.ctlx.app" target="_blank" rel="noopener">Open Compound</a>
-              <a class="button outline" href="#projects">See projects</a>
-            </div>
-          </div>
-          <img class="portrait" style="--i: 1" src="assets/profile.jpeg" alt="" width="360" height="360" draggable="false" />
-        </div>
+      <section class="hero wrap">
+        <img class="portrait" style="--i: 0" src="assets/profile.jpeg" alt="" width="96" height="96" draggable="false" />
+        <h1 style="--i: 1">citalopram</h1>
+        <p class="lede" style="--i: 2">Builds tools, trades markets, ships things that compound.</p>
+        <a class="snippet" style="--i: 3" href="https://compound.ctlx.app" target="_blank" rel="noopener">
+          <code>compound.ctlx.app</code>
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg>
+        </a>
       </section>
 
-      <section class="band" id="projects">
-        <div class="wrap">
-          <h2 class="reveal">Projects</h2>
-          <div class="grid">
-            <article class="card reveal">
-              <div class="lockup">
-                <span class="mark" id="mark">
-                  <svg class="hair" viewBox="0 0 100 100" aria-hidden="true">
-                    <line pathLength="1" x1="27" y1="73" x2="73" y2="27" />
-                  </svg>
-                  <svg class="glyph" viewBox="0 0 100 100" aria-hidden="true">
-                    <path class="z" pathLength="1" d="M22 24 H45 L24 45 H42" />
-                    <circle class="q-ring" pathLength="1" cx="64" cy="64" r="12" transform="rotate(45 64 64)" />
-                    <path class="q-tail" pathLength="1" d="M70 70 L80 80" />
-                  </svg>
-                </span>
-                <h3>Zarobenqo</h3>
-              </div>
-              <p class="note">
-                The original courier app, rebuilt. Same APIs underneath, a new interface throughout,
-                and earnings added.
-              </p>
-              <ul class="tags" aria-label="Built with"><li>Next.js 16</li><li>Turso</li><li>Drizzle</li></ul>
-              <p class="tag foot">
-                <svg viewBox="0 0 16 16" aria-hidden="true">
-                  <path d="M4 7.5h8v6H4zM5.75 7.5V5.25a2.25 2.25 0 0 1 4.5 0V7.5" />
+      <section class="wrap" id="projects">
+        <h2 class="reveal">Projects</h2>
+        <div class="pair">
+          <article class="card reveal">
+            <div class="lockup">
+              <span class="mark" id="mark">
+                <svg class="hair" viewBox="0 0 100 100" aria-hidden="true">
+                  <line pathLength="1" x1="27" y1="73" x2="73" y2="27" />
                 </svg>
-                Private
-              </p>
-            </article>
-
-            <a class="card featured reveal" href="https://compound.ctlx.app" target="_blank" rel="noopener">
-              <h3>Compound</h3>
-              <p class="note">
-                Steroid cycle plotter. Models active compound levels from half-lives published in
-                clinical studies and drug labels.
-              </p>
-              <ul class="tags" aria-label="Built with"><li>Next.js 16</li><li>Lightweight Charts</li></ul>
-              <svg class="curve" aria-hidden="true">
-                <path id="curve" pathLength="1" />
-              </svg>
-              <span class="button primary foot">Open <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg></span>
-            </a>
-
-            <a class="card link reveal" href="https://ctlx.app" target="_blank" rel="noopener">
-              <h3>ctlx.app</h3>
-              <p class="note">Only this intro card, for now.</p>
-              <span class="button outline foot">Visit <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg></span>
-            </a>
-
-            <a class="card link reveal" href="https://whyno.love" target="_blank" rel="noopener">
-              <h3>whyno.love</h3>
-              <p class="note">Second node.</p>
-              <span class="button outline foot">Visit <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg></span>
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section class="band light">
-        <div class="wrap">
-          <h2 class="reveal">Discontinued</h2>
-          <div class="grid three">
-            <article class="card reveal">
-              <h3>Neutron.technology</h3>
-              <p class="note">A Lua script for Neverlose.cc. The most advanced semirage helper available.</p>
-              <ul class="tags" aria-label="Built with"><li>Lua</li></ul>
-            </article>
-            <article class="card reveal">
-              <h3>CTLX TradeLog</h3>
-              <p class="note">A simple JSON trade logger. It worked the numbers out of the data, so nobody had to by hand.</p>
-              <ul class="tags" aria-label="Built with"><li>Next.js 16</li><li>Python</li></ul>
-            </article>
-            <article class="card reveal">
-              <h3>CTLX Atlas</h3>
-              <p class="note">An all-in-one trading platform on a trading API, built for prop firms and multiple accounts.</p>
-              <ul class="tags" aria-label="Built with"><li>Next.js 16</li><li>Python</li></ul>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="band" id="vibecoding">
-        <div class="wrap">
-          <h2 class="reveal">Vibecoding</h2>
-          <div class="rank">
-            <article class="card model first reveal">
-              <p class="tag">Favourite</p>
-              <span class="numeral" aria-hidden="true">1</span>
-              <div>
-                <h3>Claude Opus 5.5</h3>
-                <p class="maker">Anthropic</p>
-              </div>
-            </article>
-            <div class="rank-rest">
-              <article class="card model reveal">
-                <span class="numeral" aria-hidden="true">2</span>
-                <div>
-                  <h3>Claude Sonnet 5.5</h3>
-                  <p class="maker">Anthropic</p>
-                </div>
-                <p class="tag">Secondary</p>
-              </article>
-              <article class="card model reveal">
-                <span class="numeral" aria-hidden="true">3</span>
-                <div>
-                  <h3>Claude Haiku 5.5</h3>
-                  <p class="maker">Anthropic</p>
-                </div>
-                <p class="tag">Workhorse</p>
-              </article>
-              <article class="card model last reveal">
-                <span class="numeral" aria-hidden="true">4</span>
-                <div>
-                  <h3>GPT 6.1 Sol</h3>
-                  <p class="maker">OpenAI</p>
-                </div>
-                <p class="tag">Last resort</p>
-              </article>
+                <svg class="glyph" viewBox="0 0 100 100" aria-hidden="true">
+                  <path class="z" pathLength="1" d="M22 24 H45 L24 45 H42" />
+                  <circle class="q-ring" pathLength="1" cx="64" cy="64" r="12" transform="rotate(45 64 64)" />
+                  <path class="q-tail" pathLength="1" d="M70 70 L80 80" />
+                </svg>
+              </span>
+              <h3>Zarobenqo</h3>
             </div>
-          </div>
+            <p>
+              The original courier app, rebuilt. Same APIs underneath, a new interface throughout,
+              and earnings added.
+            </p>
+            <ul class="tags" aria-label="Built with"><li>Next.js 16</li><li>Turso</li><li>Drizzle</li></ul>
+            <span class="button disabled foot">
+              <svg viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M4 7.5h8v6H4zM5.75 7.5V5.25a2.25 2.25 0 0 1 4.5 0V7.5" />
+              </svg>
+              Private
+            </span>
+          </article>
+
+          <a class="card dark reveal" href="https://compound.ctlx.app" target="_blank" rel="noopener">
+            <h3>Compound</h3>
+            <p>
+              Steroid cycle plotter. Models active compound levels from half-lives published in
+              clinical studies and drug labels.
+            </p>
+            <ul class="tags" aria-label="Built with"><li>Next.js 16</li><li>Lightweight Charts</li></ul>
+            <svg class="curve" aria-hidden="true">
+              <path id="curve" pathLength="1" />
+            </svg>
+            <span class="button on-dark foot">Open <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 11.5l7-7M5.5 4.5h6v6" /></svg></span>
+          </a>
         </div>
+
+        <dl class="rows">
+          <div class="reveal">
+            <dt><a href="https://ctlx.app" target="_blank" rel="noopener">ctlx.app</a></dt>
+            <dd>Only this intro card, for now.</dd>
+          </div>
+          <div class="reveal">
+            <dt><a href="https://whyno.love" target="_blank" rel="noopener">whyno.love</a></dt>
+            <dd>Second node.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="wrap split" id="vibecoding">
+        <div class="reveal">
+          <h2>Vibecoding</h2>
+          <p>Four models, in the order I reach for them.</p>
+        </div>
+        <div class="terminal reveal" role="img" aria-label="Model ranking: 1 Claude Opus 5.5, favourite. 2 Claude Sonnet 5.5, secondary. 3 Claude Haiku 5.5, workhorse. 4 GPT 6.1 Sol, when nothing else is left.">
+          <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+          <pre aria-hidden="true"><span style="--l: 0">$ models --rank</span>
+<span style="--l: 1">1  Claude Opus 5.5     <em># favourite</em></span>
+<span style="--l: 2">2  Claude Sonnet 5.5   <em># secondary</em></span>
+<span style="--l: 3">3  Claude Haiku 5.5    <em># workhorse</em></span>
+<span style="--l: 4">4  GPT 6.1 Sol         <em># last resort</em></span></pre>
+        </div>
+      </section>
+
+      <section class="wrap" id="discontinued">
+        <h2 class="reveal">Discontinued</h2>
+        <dl class="rows">
+          <div class="reveal">
+            <dt>Neutron.technology</dt>
+            <dd>A Lua script for Neverlose.cc. The most advanced semirage helper available.</dd>
+            <dd><ul class="tags" aria-label="Built with"><li>Lua</li></ul></dd>
+          </div>
+          <div class="reveal">
+            <dt>CTLX TradeLog</dt>
+            <dd>A simple JSON trade logger. It worked the numbers out of the data, so nobody had to by hand.</dd>
+            <dd><ul class="tags" aria-label="Built with"><li>Next.js 16</li><li>Python</li></ul></dd>
+          </div>
+          <div class="reveal">
+            <dt>CTLX Atlas</dt>
+            <dd>An all-in-one trading platform on a trading API, built for prop firms and multiple accounts.</dd>
+            <dd><ul class="tags" aria-label="Built with"><li>Next.js 16</li><li>Python</li></ul></dd>
+          </div>
+        </dl>
       </section>
     </main>
 
     <footer>
       <div class="wrap">
-        <div class="footer-top">
-          <a class="brand" href="#top" aria-label="CTLX, back to top">
-            <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true">
-              <path class="upper" d="M27 25 L50 46 L73 25" />
-              <path class="caret" d="M27 75 L50 54 L73 75" />
-            </svg>
-            CTLX
-          </a>
-          <nav class="footer-links" aria-label="Footer">
-            <div>
-              <h2>Projects</h2>
-              <ul>
-                <li><a href="https://compound.ctlx.app" target="_blank" rel="noopener">Compound</a></li>
-                <li><span>Zarobenqo, private</span></li>
-              </ul>
-            </div>
-            <div>
-              <h2>Elsewhere</h2>
-              <ul>
-                <li><a href="https://whyno.love" target="_blank" rel="noopener">whyno.love</a></li>
-                <li><a href="https://ctlx.app" target="_blank" rel="noopener">ctlx.app</a></li>
-              </ul>
-            </div>
-          </nav>
-        </div>
-        <div class="footer-base">
-          <span>© 2026 citalopram</span>
-          <span>Bratislava, SK</span>
-        </div>
+        <nav aria-label="Footer">
+          <a href="https://compound.ctlx.app" target="_blank" rel="noopener">Compound</a>
+          <a href="https://whyno.love" target="_blank" rel="noopener">whyno.love</a>
+          <a href="https://ctlx.app" target="_blank" rel="noopener">ctlx.app</a>
+        </nav>
+        <span>© 2026 citalopram · Bratislava, SK</span>
       </div>
     </footer>
 
