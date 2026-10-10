@@ -450,6 +450,7 @@ footer .brand {
 
 /* the nav mark draws itself in; this one is already there */
 footer .brand-mark path {
+  stroke-dasharray: none;
   animation: none;
 }
 
@@ -638,12 +639,6 @@ footer .brand-mark path {
     animation: reveal linear both;
     animation-timeline: view();
     animation-range: entry 0% entry 45%;
-  }
-}
-
-@media (max-width: 1023px) {
-  .grid.three {
-    grid-template-columns: repeat(2, 1fr);
   }
 }
 
