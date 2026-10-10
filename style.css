@@ -246,6 +246,21 @@ div.row {
   grid-template-columns: 1fr;
 }
 
+h2 {
+  margin-top: 44px;
+  padding-bottom: 18px;
+  font-family: var(--display);
+  font-size: 1.625rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  font-variation-settings: 'opsz' 20;
+}
+
+.past .name {
+  color: var(--ink-dim);
+}
+
 div.row .note {
   max-width: 44ch;
 }
