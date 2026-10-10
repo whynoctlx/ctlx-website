@@ -23,6 +23,35 @@ function drawCurve() {
 drawCurve();
 new ResizeObserver(drawCurve).observe(plot);
 
+// in-page links glide to their section instead of jumping
+let glide = 0;
+for (const link of document.querySelectorAll('a[href^="#"]')) {
+  link.addEventListener('click', (e) => {
+    const target = document.querySelector(link.hash);
+    if (!target) return;
+    e.preventDefault();
+    history.pushState(null, '', link.hash);
+    const from = scrollY;
+    const max = document.documentElement.scrollHeight - innerHeight;
+    const to = Math.min(max, Math.max(0, from + target.getBoundingClientRect().top - (link.hash === '#top' ? 0 : 80)));
+    if (reduceMotion) return scrollTo(0, to);
+    const duration = Math.min(1400, 500 + Math.abs(to - from) * 0.4);
+    const start = performance.now();
+    const run = ++glide;
+    const step = (now) => {
+      if (run !== glide) return;
+      const t = Math.min(1, (now - start) / duration);
+      // ease-in-out quint: slow off the mark, fast through the middle, soft landing
+      const eased = t < 0.5 ? 16 * t ** 5 : 1 - (-2 * t + 2) ** 5 / 2;
+      scrollTo(0, from + (to - from) * eased);
+      if (t < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  });
+}
+// a wheel or touch during the glide hands control back
+for (const type of ['wheel', 'touchstart']) addEventListener(type, () => glide++, { passive: true });
+
 // Zarobenqo mark: draw-in, sheen, tilt toward the cursor
 const mark = document.getElementById('mark');
 const area = mark.closest('.card');
