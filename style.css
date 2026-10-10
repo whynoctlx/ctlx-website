@@ -348,7 +348,7 @@ h3 {
 }
 
 .featured .tags li {
-  background: rgb(255 255 255 / 0.18);
+  background: var(--primary-deep);
 }
 
 .light .tags {
