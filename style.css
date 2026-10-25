@@ -12,7 +12,6 @@
   --surface-soft: #fafafa;
   --surface-dark: #171717;
   --hairline: #e5e5e5;
-  --hairline-strong: #d4d4d4;
   --ink: #000000;
   --ink-deep: #090909;
   --charcoal: #525252;
@@ -57,7 +56,7 @@ body {
 }
 
 .wrap {
-  width: min(100% - 48px, 720px);
+  width: min(100% - 48px, 1200px);
   margin-inline: auto;
 }
 
@@ -99,7 +98,6 @@ main > section + section {
 }
 
 .nav .wrap {
-  width: min(100% - 48px, 960px);
   height: 56px;
   display: flex;
   align-items: center;
@@ -232,51 +230,101 @@ a.button:active {
 .hero {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  gap: 24px;
   padding: 64px 0 0;
-  text-align: center;
 }
 
 .portrait {
   width: 96px;
   height: 96px;
   border-radius: 50%;
+  background: var(--surface-soft);
   object-fit: cover;
   user-select: none;
 }
 
-.hero h1 {
-  margin-top: 24px;
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .lede {
   margin-top: 8px;
-  max-width: 32ch;
+  max-width: 36ch;
+  font-size: 1.125rem;
+  line-height: 1.56;
   text-wrap: balance;
 }
 
 .built-by {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  height: 48px;
-  margin-top: 32px;
-  padding: 0 20px;
-  border-radius: 9999px;
-  background: var(--surface-soft);
-  color: var(--ink);
-  font-family: var(--mono);
+  gap: 6px;
+  margin-top: 16px;
+  font-size: 0.8125rem;
+  line-height: 1.43;
 }
 
 .built-by svg {
-  width: 18px;
-  height: 18px;
-  fill: #d97757;
+  width: 12px;
+  height: 12px;
+  fill: currentColor;
 }
 
-.hero > * {
+.hero > .portrait,
+.intro > * {
   animation: hero-in 1000ms var(--ease) backwards;
   animation-delay: calc(var(--i) * 100ms + 100ms);
+}
+
+/* ── socials ──────────────────────────────────────────────── */
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+  list-style: none;
+}
+
+.social {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 20px 0 16px;
+  border: 0;
+  border-radius: 9999px;
+  background: var(--surface-soft);
+  color: var(--ink);
+  font: 500 0.875rem / 1.43 var(--text);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 300ms var(--ease),
+    transform 300ms var(--ease);
+}
+
+.social:hover {
+  background: var(--hairline);
+}
+
+.social:active {
+  transform: scale(0.97);
+}
+
+.social svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.social span {
+  color: var(--body);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  font-weight: 400;
 }
 
 /* ── projects ────────────────────────────────────────────── */
@@ -313,8 +361,9 @@ a.button:active {
   margin-top: auto;
 }
 
-.card .tags + .foot {
-  margin-top: 32px;
+/* the tags' bottom margin is the minimum gap; the foot's auto margin takes the rest */
+.card .tags:has(+ .foot) {
+  margin-bottom: 32px;
 }
 
 .lockup {
@@ -362,10 +411,6 @@ a.button:active {
   stroke-linejoin: round;
   stroke-dasharray: 1;
   animation: draw 2400ms var(--ease-in-out) 600ms backwards;
-}
-
-.dark:hover .curve path {
-  animation: draw-again 1800ms var(--ease-in-out);
 }
 
 /* ── rows ────────────────────────────────────────────────── */
@@ -475,7 +520,7 @@ a.button:active {
 .usage dl {
   display: grid;
   gap: 24px;
-  margin: 24px 0;
+  margin-top: 24px;
 }
 
 .usage dl > div {
@@ -513,7 +558,7 @@ a.button:active {
   transform-origin: left;
 }
 
-/* weekly share per model: one bar, three segments */
+/* weekly share per model: one bar */
 .usage .split-bar {
   display: flex;
   background: none;
@@ -524,16 +569,6 @@ a.button:active {
   width: calc(var(--p) * 100%);
   min-width: 4px;
   border-radius: 9999px;
-}
-
-.split-bar i:nth-child(2),
-.legend li:nth-child(2)::before {
-  background: var(--body);
-}
-
-.split-bar i:nth-child(3),
-.legend li:nth-child(3)::before {
-  background: var(--hairline-strong);
 }
 
 .legend {
@@ -575,21 +610,29 @@ a.button:active {
   margin-top: 8px;
 }
 
+/* one ruled line of figures, columns split by hairlines */
 .stats ul {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline);
   list-style: none;
 }
 
 .stats li {
   display: grid;
   gap: 2px;
-  padding: 12px 16px;
-  border-radius: var(--r-lg);
-  background: var(--surface-soft);
+  padding-left: 16px;
   font-size: 0.75rem;
   line-height: 1.33;
+}
+
+.stats li:first-child {
+  padding-left: 0;
+}
+
+.stats li + li {
+  border-left: 1px solid var(--hairline);
 }
 
 .stats b {
@@ -598,16 +641,6 @@ a.button:active {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-}
-
-.usage .button {
-  display: flex;
-  height: auto;
-  min-height: 36px;
-  padding: 8px 20px;
-  white-space: normal;
-  text-align: center;
-  line-height: 1.43;
 }
 
 /* ── footer ──────────────────────────────────────────────── */
@@ -619,7 +652,6 @@ footer {
 }
 
 footer .wrap {
-  width: min(100% - 48px, 960px);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -653,7 +685,7 @@ footer a {
   font-weight: 400;
 }
 
-/* ── Zarobenqo mark (brand/zarobenqo-logo.html) ──────────── */
+/* ── Zarobenqo mark ──────────── */
 .mark {
   --size: 40px;
   --mx: 30%;
@@ -782,12 +814,6 @@ footer a {
   }
 }
 
-@keyframes draw-again {
-  from {
-    stroke-dashoffset: 1;
-  }
-}
-
 @keyframes sweep {
   to {
     background-position: 150% 0;
@@ -830,6 +856,72 @@ footer a {
   }
 }
 
+/* ── rail: section title left, content right on wide screens ── */
+@media (min-width: 1024px) {
+  /* portrait sits in the title column, so the hero lines up with every section below */
+  .hero {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    align-items: center;
+    gap: 48px;
+    padding-top: 96px;
+  }
+
+  .portrait {
+    width: 160px;
+    height: 160px;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+    line-height: 1.08;
+  }
+
+  main > section:not(.hero) {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 16px 48px;
+    align-items: start;
+  }
+
+  main > section:not(.hero) > * {
+    grid-column: 2;
+  }
+
+  main > section:not(.hero) > :first-child {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* the grid gap spaces the blocks now */
+  .pair,
+  .rows,
+  .socials,
+  .pair + .rows {
+    margin-top: 0;
+  }
+
+  /* the pills are taller than the title, so centre them on it */
+  #socials {
+    align-items: center;
+  }
+
+  /* first row lines up with the section title */
+  h2 + .rows > div:first-child {
+    padding-top: 0;
+  }
+
+  .rows > div {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    align-items: baseline;
+    gap: 4px 24px;
+  }
+
+  .rows dd {
+    grid-column: 2;
+  }
+}
+
 @media (max-width: 767px) {
   :root {
     --section: 64px;
@@ -869,6 +961,21 @@ footer a {
 
   .stats ul {
     grid-template-columns: repeat(2, 1fr);
+    row-gap: 16px;
+  }
+
+  /* two per row: the hairline only splits the pair */
+  .stats li:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .socials {
+    display: grid;
+  }
+
+  .social {
+    width: 100%;
   }
 
   .curve {
